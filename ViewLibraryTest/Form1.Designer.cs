@@ -43,7 +43,6 @@
             this.最大化XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.关闭CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewButton21 = new View.Controls.ButtonWinForm();
             this.switchButton1 = new View.Controls.SwitchButton();
             this.viewComboBox4 = new View.Controls.ViewComboBox();
             this.viewComboBox3 = new View.Controls.ViewComboBox();
@@ -149,21 +148,6 @@
             this.关闭CToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.关闭CToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.关闭CToolStripMenuItem.Text = "关闭(C)";
-            // 
-            // viewButton21
-            // 
-            this.viewButton21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.viewButton21.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.viewButton21.FlatAppearance.BorderSize = 2;
-            this.viewButton21.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(98)))), ((int)(((byte)(255)))));
-            this.viewButton21.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.viewButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.viewButton21.Location = new System.Drawing.Point(224, 110);
-            this.viewButton21.Name = "viewButton21";
-            this.viewButton21.Size = new System.Drawing.Size(125, 38);
-            this.viewButton21.TabIndex = 7;
-            this.viewButton21.Text = "Button21";
-            this.viewButton21.UseVisualStyleBackColor = false;
             // 
             // switchButton1
             // 
@@ -316,7 +300,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ContextMenuStrip = this.contextMenuStrip2;
-            this.Controls.Add(this.viewButton21);
             this.Controls.Add(this.switchButton1);
             this.Controls.Add(this.viewComboBox4);
             this.Controls.Add(this.viewComboBox3);
@@ -355,7 +338,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 关闭CToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 最大化XToolStripMenuItem;
-        private View.Controls.ButtonWinForm viewButton21;
     }
 }
 

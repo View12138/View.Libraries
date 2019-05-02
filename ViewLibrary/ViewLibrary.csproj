@@ -75,12 +75,6 @@
     <Compile Include="Controls\ViewButton.Designer.cs">
       <DependentUpon>ViewButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ButtonWinForm.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ButtonWinForm.Designer.cs">
-      <DependentUpon>ButtonWinForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ViewComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,9 +94,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Slider.resx">
       <DependentUpon>Slider.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ButtonWinForm.resx">
-      <DependentUpon>ButtonWinForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ViewComboBox.resx">
       <DependentUpon>ViewComboBox.cs</DependentUpon>
