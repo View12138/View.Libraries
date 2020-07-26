@@ -298,7 +298,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(523, 300);
             this.ContextMenuStrip = this.contextMenuStrip2;
             this.Controls.Add(this.switchButton1);
             this.Controls.Add(this.viewComboBox4);
