@@ -81,9 +81,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ViewLibrary\ViewLibrary.csproj">
+    <ProjectReference Include="..\ViewLibrary\View.Windows.Forms.Controls.csproj">
       <Project>{322766AD-42C8-49FA-8355-B397AFC629AB}</Project>
-      <Name>ViewLibrary</Name>
+      <Name>View.Windows.Forms.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
