@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Threading.Tasks;
 using View.Drawing.Extensions.Models;
+using ImageEncoder = System.Drawing.Imaging.Encoder;
+using ImageEncoderValue = System.Drawing.Imaging.EncoderValue;
 
 namespace View.Drawing.Extensions
 {
@@ -16,15 +17,16 @@ namespace View.Drawing.Extensions
     /// </summary>
     public static class ImageExtension
     {
-
         /// <summary>
         /// 按原图宽高比尽可能的将原图高质量的缩放到新的尺寸中。
         /// <para>新的图像尺寸不会超过给定的尺寸</para>
+        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
         /// </summary>
         /// <param name="image"></param>
         /// <param name="size"></param>
+        /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        public static Image ChangeSize(this Image image, Size size)
+        public static Image ChangeSize(this Image image, Size size, bool reserve = false)
         {
             if (image is null)
             { throw new ArgumentNullException(nameof(image)); }
@@ -41,7 +43,7 @@ namespace View.Drawing.Extensions
                     .ClearEx(Color.Transparent)
                     .DrawImageEx(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(0, 0), image.Size), GraphicsUnit.Pixel)
                     .Dispose();
-            image.Dispose();
+            if (!reserve) { image.Dispose(); }
             return destBitmap;
         }
 
@@ -68,48 +70,48 @@ namespace View.Drawing.Extensions
         }
 
         /// <summary>
-        /// 使用 DGI 内置的编码器将图片的质量压缩到指定的大小。
-        /// <para>TODO: 优化性能</para>
+        /// 使用 DGI 内置的编码器将图片的质量尽可能的压缩到指定的大小。
+        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
         /// </summary>
         /// <param name="image"></param>
         /// <param name="length">指定的文件大小 ( 单位: <see langword="KB"/> )</param>
         /// <param name="codecs">DGI 内置的编码器</param>
+        /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        [Obsolete("待优化性能，暂不使用。")]
-        public static MemoryStream ChangeQuality(this Image image, int length, ImageCodecs codecs = ImageCodecs.JPEG)
-            => ChangeQuality(image, length, ImageHandle.GetCodecInfo(codecs));
+        public static async Task<Image> ChangeQualityAsync(this Image image, int length, ImageCodecs codecs = ImageCodecs.JPEG, bool reserve = false)
+            => await ChangeQualityAsync(image, length, ImageHandle.GetCodecInfo(codecs), reserve);
         /// <summary>
-        /// 使用指定的编码器将图片的质量压缩到指定的大小。
+        /// 使用指定的编码器将图片的质量尽可能的压缩到指定的大小。
+        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
         /// </summary>
         /// <param name="image"></param>
         /// <param name="length">指定的文件大小 ( 单位: <see langword="KB"/> )</param>
         /// <param name="imageCodecInfo">指定的编码器</param>
+        /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        [Obsolete("待优化性能，暂不使用。")]
-        public static MemoryStream ChangeQuality(this Image image, int length, ImageCodecInfo imageCodecInfo)
+        public static async Task<Image> ChangeQualityAsync(this Image image, int length, ImageCodecInfo imageCodecInfo, bool reserve = false)
         {
-            int quality = 100;
-            length *= 1024;
-
-            //TODO: 优化性能
-            MemoryStream stream;
-            do
+            return await Task.Run(() =>
             {
-                stream = new MemoryStream();
-                image.Save(stream, imageCodecInfo, ImageHandle.GetQualityParam(quality));
-
-                Console.WriteLine(quality);
-                //quality -= (int)Math.Pow(Math.Abs(stream.Length - length), 0.15);
-                quality -= 5;
-                if (quality < 5 || stream.Length < length) // 无法继续降低质量了
+                int quality = 100;
+                length *= 1024;
+                do
                 {
-                    stream.Position = 0;
-                    return stream;
-                }
-                else
-                { stream.Dispose(); }
+                    Stream stream = new MemoryStream();
+                    image.Save(stream, imageCodecInfo, ImageHandle.GetQualityParam(quality));
+                    //quality -= (int)Math.Pow(Math.Abs(stream.Length - length), 0.15);
+                    quality -= 5;
+                    if (quality < 5 || stream.Length < length) // 无法继续降低质量了
+                    {
+                        if (!reserve) { image.Dispose(); }
+                        stream.Position = 0;
+                        return Image.FromStream(stream);
+                    }
+                    else
+                    { stream.Dispose(); }
 
-            } while (true);
+                } while (true);
+            });
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace View.Drawing.Extensions
             Marshal.Copy(bitmapData.Scan0, colorBuffer, 0, colorBuffer.Length);
 
             int channels = bitmapData.Stride / bitmapData.Width;
-            if (channels != 3 || channels != 4)
+            if (channels != 3 && channels != 4)
             { throw new ArgumentException("不支持这种像素格式的图片"); }
             if (channels == 4)
             {
@@ -196,6 +198,7 @@ namespace View.Drawing.Extensions
         /// <param name="radius">待替换颜色的偏移范围</param>
         /// <param name="cutSize"></param>
         /// <returns></returns>
+        [Obsolete]
         public static Image ReplaceColor(this Image image, Color oldColor, Color newColor, int radius, out Rectangle cutSize)
         {
             byte[] colorBuffer; // 图片的颜色信息  
@@ -289,7 +292,7 @@ namespace View.Drawing.Extensions
             colorBuffer = new byte[bitmapData.Stride * bitmapData.Height];
             Marshal.Copy(bitmapData.Scan0, colorBuffer, 0, colorBuffer.Length);
             int channels = bitmapData.Stride / bitmapData.Width;
-            if (channels != 3 || channels != 4)
+            if (channels != 3 && channels != 4)
             { throw new ArgumentException("不支持这种像素格式的图片"); }
             if (channels == 3)
             {
@@ -321,14 +324,16 @@ namespace View.Drawing.Extensions
         /// </summary>
         /// <param name="ext"></param>
         /// <returns></returns>
-        public static ImageCodecInfo GetCodecInfo(ImageCodecs ext) => ImageCodecInfo.GetImageEncoders().ToList().Find(info => info.FormatDescription.Equals(ext.ToString().ToUpper()));
+        public static ImageCodecInfo GetCodecInfo(ImageCodecs ext)
+            => ImageCodecInfo.GetImageEncoders().ToList().Find(info => info.FormatDescription.Equals(ext.ToString().ToUpper()));
 
         /// <summary>
         /// 获取指定的质量参数
         /// </summary>
         /// <param name="quality">质量，[1-100]之间</param>
         /// <returns></returns>
-        public static EncoderParameters GetQualityParam(int quality) => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, new long[] { quality }) }, };
+        public static EncoderParameters GetQualityParam(int quality)
+            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(ImageEncoder.Quality, new long[] { quality }) }, };
         public static Size SizeToSize(Size oldSize, Size newSize)
         {
             // scale : 宽高比 ; 宽 = scale × 高 ; 高 = 宽 ÷ scale .
