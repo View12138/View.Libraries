@@ -333,7 +333,22 @@ namespace View.Drawing.Extensions
         /// <param name="quality">质量，[1-100]之间</param>
         /// <returns></returns>
         public static EncoderParameters GetQualityParam(int quality)
-            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(ImageEncoder.Quality, new long[] { quality }) }, };
+            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(ImageEncoder.Quality, new long[] { quality }) } };
+        /// <summary>
+        /// 获取指定的质量参数
+        /// </summary>
+        /// <param name="encoder">参数</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
+        public static EncoderParameters GetEncoderParam(ImageEncoder encoder, ImageEncoderValue value)
+            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(encoder, new long[] { (long)value }) } };
+
+        /// <summary>
+        /// 调整尺寸
+        /// </summary>
+        /// <param name="oldSize"></param>
+        /// <param name="newSize"></param>
+        /// <returns></returns>
         public static Size SizeToSize(Size oldSize, Size newSize)
         {
             // scale : 宽高比 ; 宽 = scale × 高 ; 高 = 宽 ÷ scale .

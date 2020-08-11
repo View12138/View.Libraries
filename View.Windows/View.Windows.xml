@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>View.Windows</name>
+    </assembly>
+    <members>
+        <member name="M:View.Windows.Shortcut.ShortcutCore.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            初始化快捷方式构造器。
+            </summary>
+            <param name="productName">产品名称。<para>快捷方式名称</para></param>
+            <param name="exeFullPath">快捷方式指向的可执行程序的完整路径。</param>
+            <param name="arguments">快捷方式的启动参数。</param>
+            <param name="iconFullPath">快捷方式图标的完整路径。<para>为空则使用可执行程序的默认图标</para></param>
+        </member>
+        <member name="P:View.Windows.Shortcut.ShortcutCore.ProductName">
+            <summary>
+            获取或设置产品名称。
+            <para>即快捷方式的名称</para>
+            </summary>
+        </member>
+        <member name="P:View.Windows.Shortcut.ShortcutCore.ExeFullPath">
+            <summary>
+            获取或设置可执行程序的完整路径。
+            </summary>
+        </member>
+        <member name="P:View.Windows.Shortcut.ShortcutCore.Arguments">
+            <summary>
+            获取或设置快捷方式的参数
+            </summary>
+        </member>
+        <member name="P:View.Windows.Shortcut.ShortcutCore.IconFullPath">
+            <summary>
+            获取或设置快捷方式图标的完整路径。
+            </summary>
+        </member>
+        <member name="M:View.Windows.Shortcut.ShortcutCore.CreateShortcut(View.Windows.Shortcut.ShortcutType)">
+            <summary>
+            在指定位置上创建快捷方式
+            </summary>
+            <param name="type">指定类型</param>
+            <returns>成功或失败</returns>
+        </member>
+        <member name="M:View.Windows.Shortcut.ShortcutCore.Exists(View.Windows.Shortcut.ShortcutType)">
+            <summary>
+            获取一个值，指示是否已经存在指定类型的快捷方式。
+            </summary>
+            <param name="type">指定类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Windows.Shortcut.ShortcutCore.RemoveShortcut(View.Windows.Shortcut.ShortcutType)">
+            <summary>
+            移除指定类型的快捷方式
+            </summary>
+            <param name="type">指定类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Windows.Shortcut.ShortcutCore.GetLnkPath(View.Windows.Shortcut.ShortcutType,System.String)">
+            <summary>
+            获取指定类型的快捷方式路径。
+            </summary>
+            <param name="type">指定类型</param>
+            <param name="productName">产品名称</param>
+            <returns></returns>
+        </member>
+        <member name="T:View.Windows.Shortcut.ShortcutType">
+            <summary>
+            快捷方式的类型
+            </summary>
+        </member>
+        <member name="F:View.Windows.Shortcut.ShortcutType.Desktop">
+            <summary>
+            桌面快捷方式。
+            </summary>
+        </member>
+        <member name="F:View.Windows.Shortcut.ShortcutType.Startup">
+            <summary>
+            自启快捷方式。
+            <para>此方式需要管理员运行</para>
+            </summary>
+        </member>
+    </members>
+</doc>
