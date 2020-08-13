@@ -1,0 +1,14 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+
+<#@ output extension=".txt" #>
+
+<#@ assembly name="C:\View.Libraries\ORM\DbFirst\net48\View.VisualStudio.TextTemplating.dll" #>
+<#@ import namespace="View.VisualStudio.TextTemplating.DbFirst.MySql" #>
+
+<#this.BuildEntityFromMySql(this.Host,"TODO:命名空间","TODO:数据库名称","TODO:用户名","TODO:密码","https://127.0.0.1:3306").Build(); #>
+
+注：若要生成枚举类型，请把字段设置为 smallint ，并且在注释中写入枚举标识和名称，并以 {} 符号包裹。
+注：注释中仅能包含一对 {} 符号，否则无法生成枚举类型。
+枚举字段注释实例： 这是一个枚举。{enum MyEnum}
+
+附：请自行定制生成的枚举类型。枚举文件一旦生成便不会再被自动修改。
