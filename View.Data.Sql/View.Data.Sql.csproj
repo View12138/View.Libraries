@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>View</Authors>
+    <Version>0.0.1</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>View.Logo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>sql</PackageTags>
+    <NeutralLanguage>zh</NeutralLanguage>
+    <Description>和数据库相关的内容。</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Data.Sql\View.Data.Sql.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Data.Sql\View.Data.Sql.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\View.local.Packages\Icons\View.Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\View.Core\View.Core.csproj" />
+  </ItemGroup>
+
+</Project>

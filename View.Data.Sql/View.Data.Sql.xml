@@ -1,0 +1,596 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>View.Data.Sql</name>
+    </assembly>
+    <members>
+        <member name="T:View.Data.Sql.ConnectConfigs.MySqlConfig">
+            <summary>
+            <see langword="MySql"/> 数据库配置
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.ConnectConfigs.MySqlConfig.Server">
+            <summary>
+            数据库地址以及端口。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.ConnectConfigs.MySqlConfig.User">
+            <summary>
+            数据库用户名。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.ConnectConfigs.MySqlConfig.Password">
+            <summary>
+            数据库密码。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.ConnectConfigs.MySqlConfig.Database">
+            <summary>
+            数据库名。
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.#ctor(System.String)">
+            <summary>
+            初始化数据库配置
+            </summary>
+            <param name="database">数据库名</param>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.#ctor(System.String,System.String)">
+            <summary>
+            初始化数据库配置
+            </summary>
+            <param name="database">数据库名</param>
+            <param name="user">数据库用户名</param>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.#ctor(System.String,System.String,System.String)">
+            <summary>
+            初始化数据库配置
+            </summary>
+            <param name="database">数据库名</param>
+            <param name="user">数据库用户名</param>
+            <param name="password">数据库密码</param>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.#ctor(System.String,System.String,System.Uri)">
+            <summary>
+            初始化数据库配置
+            </summary>
+            <param name="database">数据库名</param>
+            <param name="user">数据库用户名</param>
+            <param name="server">数据库地址以及端口</param>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.#ctor(System.String,System.String,System.String,System.Uri)">
+            <summary>
+            初始化数据库配置
+            </summary>
+            <param name="database">数据库名</param>
+            <param name="user">数据库用户名</param>
+            <param name="password">数据库密码</param>
+            <param name="server">数据库地址以及端口</param>
+        </member>
+        <member name="M:View.Data.Sql.ConnectConfigs.MySqlConfig.ToString">
+            <summary>
+            返回 <see langword="MySql"/> 数据库连接字段。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:View.Data.Sql.Extensions.SQLOperatorExtension">
+            <summary>
+            <see langword="SQL"/> 操作语句构建类。
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.GetField(System.String)">
+            <summary>
+            构建字段的 <see langword="SQL"/> 表达形式。
+            </summary>
+            <param name="fieldName">字段名</param>
+            <returns>使用 `` 包裹后的字段名</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.GetValue(System.Object)">
+            <summary>
+            构建值对应的 <see langword="SQL"/> 表达形式。
+            <list type="bullet">
+            <item><see cref="T:System.String"/>、<see cref="T:System.Char"/> 类型 使用 <c>''</c> 包裹</item>
+            <item><see cref="T:System.DateTime"/> 类型 的数据使用 <c>yyyy-MM-dd hh:mm:ss.fffffffzzz</c> 格式化</item>
+            <item>其它 类型使用 <see cref="M:System.Object.ToString"/> 转换为此对象的字符串表达形式</item>
+            </list>
+            </summary>
+            <param name="value">值</param>
+            <returns>根据类型使用或不使用 '' 包裹值</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.EQ(System.String,System.Object)">
+            <summary>
+            构建 <see langword="="/> 语句。
+            <c><see langword="fieldName"/> = <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.NE(System.String,System.Object)">
+            <summary>
+            构建 <see langword="!="/> 语句。
+            <c><see langword="fieldName"/> != <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.LT(System.String,System.Object)">
+            <summary>
+            构建 <see langword="&lt;"/> 语句。
+            <c><see langword="fieldName"/> &lt; <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.LE(System.String,System.Object)">
+            <summary>
+            构建 <see langword="&lt;="/> 语句。
+            <c><see langword="fieldName"/> &lt;= <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.GT(System.String,System.Object)">
+            <summary>
+            构建 <see langword="&gt;"/> 语句。
+            <c><see langword="fieldName"/> &gt; <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.GE(System.String,System.Object)">
+            <summary>
+            构建 <see langword="&gt;="/> 语句。
+            <c><see langword="fieldName"/> &gt;= <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.Like(System.String,System.Object,View.Data.Sql.Models.LikeType)">
+            <summary>
+            构建 <see langword="like"/> 语句。
+            <c><see langword="fieldName"/> like <see langword="value"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="value">值</param>
+            <param name="type">like 语句类型</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.IsNull(System.String)">
+            <summary>
+            构建 <see langword="is null"/> 语句。
+            <c><see langword="fieldName"/> is null</c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.IsNotNull(System.String)">
+            <summary>
+            构建 <see langword="is not null"/> 语句。
+            <c><see langword="fieldName"/> is null</c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.Between(System.String,System.Object,System.Object)">
+            <summary>
+            构建 <see langword="betewwn and"/> 语句。
+            <c><see langword="fieldName"/> between <see langword="leftValue"/> and <see langword="rightValue"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="leftValue">左值</param>
+            <param name="rightValue">右值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.NotBetween(System.String,System.Object,System.Object)">
+            <summary>
+            构建 <see langword="not betewwn and"/> 语句。
+            <c><see langword="fieldName"/> between <see langword="leftValue"/> and <see langword="rightValue"/></c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="leftValue">左值</param>
+            <param name="rightValue">右值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.In(System.String,System.Object[])">
+            <summary>
+            构建 <see langword="in"/> 语句。
+            <c><see langword="fieldName"/> in (<see langword="values"/>)</c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="values">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.NotIn(System.String,System.Object[])">
+            <summary>
+            构建 <see langword="not in"/> 语句。
+            <c><see langword="fieldName"/> not in (<see langword="values"/>)</c>
+            </summary>
+            <param name="fieldName">字段名</param>
+            <param name="values">值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.And(System.String,System.String)">
+            <summary>
+            构建 <see langword="and"/> 语句。
+            <c><see langword="left"/> and (<see langword="right"/>)</c>
+            </summary>
+            <param name="left">左值</param>
+            <param name="right">右值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.Or(System.String,System.String)">
+            <summary>
+            构建 <see langword="or"/> 语句。
+            <c><see langword="left"/> or (<see langword="right"/>)</c>
+            </summary>
+            <param name="left">左值</param>
+            <param name="right">右值</param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.Limit(System.String,System.Int32,System.Int32)">
+            <summary>
+            构建 <see langword="limit"/> 语句。
+            <c><see langword="left"/> limit <see langword="index"/>,<see langword="rows"/></c>
+            </summary>
+            <param name="left"></param>
+            <param name="index"></param>
+            <param name="rows"></param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.SQLOperatorExtension.OrderBy(System.String,System.String,System.Boolean)">
+            <summary>
+            构建 <see langword="order by"/> 语句。
+            <c><see langword="left"/> order by <see langword="fieldName"/></c>
+            </summary>
+            <param name="left"></param>
+            <param name="fieldName"></param>
+            <param name="isDesc"></param>
+            <returns>构建完成的 SQL 子句</returns>
+        </member>
+        <member name="T:View.Data.Sql.Interfaces.IDbConnectConfig">
+            <summary>
+            数据库连接配置
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.Interfaces.IDbConnectConfig.Server">
+            <summary>
+            数据库地址以及端口。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.Interfaces.IDbConnectConfig.User">
+            <summary>
+            数据库用户名。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.Interfaces.IDbConnectConfig.Password">
+            <summary>
+            数据库密码。
+            </summary>
+        </member>
+        <member name="P:View.Data.Sql.Interfaces.IDbConnectConfig.Database">
+            <summary>
+            数据库名。
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.Interfaces.IDbConnectConfig.ToString">
+            <summary>
+            数据库连接字符串。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:View.Data.Sql.Models.IEntity">
+            <summary>
+            实体模型
+            </summary>
+        </member>
+        <member name="T:View.Data.Sql.Models.LikeType">
+            <summary>
+            <see langword="like"/> 语句类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.Contains">
+            <summary>
+            包含 <see langword="value"/>。
+            <c>like '%<see langword="value"/>%'</c>
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.NotContains">
+            <summary>
+            不包含 <see langword="value"/>。
+            <c>not like '%<see langword="value"/>%'</c>
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.StartWith">
+            <summary>
+            以 <see langword="value"/> 开始。
+            <c>like '<see langword="value"/>%'</c>
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.NotStartWith">
+            <summary>
+            不以 <see langword="value"/> 开始。
+            <c>not like '<see langword="value"/>%'</c>
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.EndWith">
+            <summary>
+            以 <see langword="value"/> 结束。
+            <c>like '%<see langword="value"/>'</c>
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.LikeType.NotEndWith">
+            <summary>
+            不以 <see langword="value"/> 结束。
+            <c>not like '%<see langword="value"/>'</c>
+            </summary>
+        </member>
+        <member name="T:View.Data.Sql.Models.SqlType">
+            <summary>
+            <see langword="SQL"/> 通用数据类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.SmallInt">
+            <summary>
+            整数值（没有小数点）。精度 5。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Int">
+            <summary>
+            整数值（没有小数点）。精度 10。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Integer">
+            <summary>
+            整数值（没有小数点）。精度 10。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.BigInt">
+            <summary>
+            整数值（没有小数点）。精度 19。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Year">
+            <summary>
+            整数值（没有小数点）。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.MediumInt">
+            <summary>
+            整数值（没有小数点）。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Real">
+            <summary>
+            近似数值，尾数精度 7。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Float">
+            <summary>
+            近似数值，尾数精度 16。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Double">
+            <summary>
+            近似数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Precision">
+            <summary>
+            近似数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Bool">
+            <summary>
+            布尔类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Boolean">
+            <summary>
+            布尔类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Decimal">
+            <summary>
+            精确数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Dec">
+            <summary>
+            精确数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Numeric">
+            <summary>
+            精确数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Fixed">
+            <summary>
+            精确数值。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Money">
+            <summary>
+            金钱类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.SmallMoney">
+            <summary>
+            金钱类型。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Binary">
+            <summary>
+            二进制串。固定长度。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Image">
+            <summary>
+            图片类型
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.VarBinary">
+            <summary>
+            二进制串。可变长度。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Blob">
+            <summary>
+            二进制串
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.MediumBlob">
+            <summary>
+            二进制串
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.TinyBlob">
+            <summary>
+            二进制串
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.TinyInt">
+            <summary>
+            小整数。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Bit">
+            <summary>
+            存储 TRUE 或 FALSE 值
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Date">
+            <summary>
+            日期。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Time">
+            <summary>
+            时间。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.DateTime">
+            <summary>
+            日期。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.SmallDateTime">
+            <summary>
+            日期。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.TimeStamp">
+            <summary>
+            时刻
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.UniqueIdentifier">
+            <summary>
+            唯一标识符
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Variant">
+            <summary>
+            Object
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Text">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.Char">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.NChar">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.NText">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.NVarChar">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.VarChar">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.TinyText">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.MediumText">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="F:View.Data.Sql.Models.SqlType.LongText">
+            <summary>
+            字符串。
+            </summary>
+        </member>
+        <member name="T:View.Data.Sql.TypeConverter">
+            <summary>
+            数据类型转换。
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.SqlTypeToType(View.Data.Sql.Models.SqlType)">
+            <summary>
+            <see langword="SQL"/> 通用数据类型转 <see langword="C#"/> 数据类型。
+            </summary>
+            <param name="type"><see langword="SQL"/> 通用数据类型</param>
+            <returns><see langword="C#"/> 数据类型</returns>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.SqlTypeToType(System.String)">
+            <summary>
+            <see langword="SQL"/> 通用数据类型转 <see langword="C#"/> 数据类型。
+            </summary>
+            <param name="type"><see langword="SQL"/> 通用数据类型</param>
+            <returns><see langword="C#"/> 数据类型</returns>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.TypeToSsqlType(System.Type)">
+            <summary>
+            <see langword="C#"/> 数据类型转 <see langword="SQL"/> 通用数据类型。
+            </summary>
+            <param name="type"><see langword="C#"/> 数据类型</param>
+            <returns><see langword="SQL"/> 通用数据类型</returns>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.SqlTypeToString(View.Data.Sql.Models.SqlType)">
+            <summary>
+            <see langword="SQL"/> 数据类型转换为小写的字符串形式。
+            </summary>
+            <param name="type"><see langword="SQL"/> 数据类型</param>
+            <returns>小写的字符串形式</returns>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.SqlStringToSqlType(System.String)">
+            <summary>
+            <see langword="SQL"/> 字符串形式数据类型转换为 <see cref="T:View.Data.Sql.Models.SqlType"/> 数据类型。
+            </summary>
+            <param name="str"><see langword="SQL"/> 数据类型的字符串形式</param>
+            <returns><see langword="SQL"/> 通用数据类型</returns>
+        </member>
+        <member name="M:View.Data.Sql.TypeConverter.GetLength(System.Type)">
+            <summary>
+            获取 <see langword="C#"/> 数据类型的大小。
+            </summary>
+            <param name="type"> <see langword="C#"/> 数据类型</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
