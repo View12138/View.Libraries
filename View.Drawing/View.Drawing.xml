@@ -305,6 +305,22 @@
             <param name="quality">质量，[1-100]之间</param>
             <returns></returns>
         </member>
+        <member name="M:View.Drawing.Extensions.ImageHandle.GetEncoderParam(System.Drawing.Imaging.Encoder,System.Drawing.Imaging.EncoderValue)">
+            <summary>
+            获取指定的质量参数
+            </summary>
+            <param name="encoder">参数</param>
+            <param name="value">值</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Drawing.Extensions.ImageHandle.SizeToSize(System.Drawing.Size,System.Drawing.Size)">
+            <summary>
+            调整尺寸
+            </summary>
+            <param name="oldSize"></param>
+            <param name="newSize"></param>
+            <returns></returns>
+        </member>
         <member name="T:View.Drawing.Extensions.Models.ImageCodecs">
             <summary>
             编码器名称
