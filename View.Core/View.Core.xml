@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>View.Core</name>
+    </assembly>
+    <members>
+        <member name="T:View.Core.Extensions.EnumExtension">
+            <summary>
+            枚举扩展
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.EnumExtension.Remove``1(``0,``0)">
+            <summary>
+            移除位域枚举中指定的值
+            </summary>
+            <typeparam name="TEnum"></typeparam>
+            <param name="_enum"></param>
+            <param name="enum"></param>
+            <returns></returns>
+        </member>
+        <member name="T:View.Core.Extensions.StringExtension">
+            <summary>
+            字符串扩展
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.StringExtension.IsNullOrEmpty(System.String)">
+            <summary>
+            指示指定的字符串是 <see langword="null"/> 还是 <see cref="F:System.String.Empty"/> 字符串。
+            </summary>
+            <param name="value">指定的字符串</param>
+            <returns>如果参数 <paramref name="value"/> 为 <see langword="null"/> 或 空字符串("")，则为 <see langword="true"/>；否则为 <see langword="false"/>。</returns>
+        </member>
+        <member name="M:View.Core.Extensions.StringExtension.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            指示指定的字符串是 <see langword="null"/> 、空还是仅由空白字符串组成。
+            </summary>
+            <param name="value">指定的字符串</param>
+            <returns>如果参数 <paramref name="value"/> 为 <see langword="null"/> ，空字符串("")或仅由空白字符组成，则为 <see langword="true"/>；否则为 <see langword="false"/>。</returns>
+        </member>
+    </members>
+</doc>
