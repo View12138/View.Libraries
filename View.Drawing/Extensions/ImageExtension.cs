@@ -26,14 +26,25 @@ namespace View.Drawing.Extensions
         /// <param name="size"></param>
         /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        public static Image ChangeSize(this Image image, Size size, bool reserve = false)
+        public static Image ChangeSize(this Image image, Size size, bool reserve = false) 
         {
             if (image is null)
             { throw new ArgumentNullException(nameof(image)); }
 
             Size newSize = ImageHandle.SizeToSize(image.Size, size);
-
-            Bitmap destBitmap = new Bitmap(newSize.Width, newSize.Height, image.PixelFormat);
+            Bitmap destBitmap;
+            if (ImageHandle.IsIndexedPixelFormat(image.PixelFormat))
+            {
+                destBitmap = new Bitmap(newSize.Width, newSize.Height, PixelFormat.Format32bppArgb);
+                using (Graphics g = Graphics.FromImage(destBitmap))
+                {
+                    g.DrawImage(image, 0, 0);
+                }
+            }
+            else
+            {
+                destBitmap = new Bitmap(newSize.Width, newSize.Height, image.PixelFormat);
+            }
             Graphics.FromImage(destBitmap)
                     .SetCompositingQuality(CompositingQuality.HighQuality)
                     .SetSmoothingMode(SmoothingMode.HighQuality)
@@ -357,6 +368,32 @@ namespace View.Drawing.Extensions
             { return new Size((int)(scale * newSize.Height), newSize.Height); }
             else
             { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
+        }
+
+        /// <summary>
+        /// 判断图片是否索引像素格式,是否是引发异常的像素格式
+        /// </summary>
+        /// <param name="imagePixelFormat">图片的像素格式</param>
+        /// <returns></returns>
+        public static bool IsIndexedPixelFormat(PixelFormat imagePixelFormat)
+        {
+            PixelFormat[] pixelFormatArray = {
+                                            PixelFormat.Format1bppIndexed
+                                            ,PixelFormat.Format4bppIndexed
+                                            ,PixelFormat.Format8bppIndexed
+                                            ,PixelFormat.Undefined
+                                            ,PixelFormat.DontCare
+                                            ,PixelFormat.Format16bppArgb1555
+                                            ,PixelFormat.Format16bppGrayScale
+                                        };
+            foreach (PixelFormat pf in pixelFormatArray)
+            {
+                if (imagePixelFormat == pf)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
