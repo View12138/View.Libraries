@@ -321,6 +321,13 @@
             <param name="newSize"></param>
             <returns></returns>
         </member>
+        <member name="M:View.Drawing.Extensions.ImageHandle.IsIndexedPixelFormat(System.Drawing.Imaging.PixelFormat)">
+            <summary>
+            判断图片是否索引像素格式,是否是引发异常的像素格式
+            </summary>
+            <param name="imagePixelFormat">图片的像素格式</param>
+            <returns></returns>
+        </member>
         <member name="T:View.Drawing.Extensions.Models.ImageCodecs">
             <summary>
             编码器名称

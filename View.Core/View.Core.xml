@@ -4,6 +4,32 @@
         <name>View.Core</name>
     </assembly>
     <members>
+        <member name="T:View.Core.Extensions.DateTimeExtension">
+            <summary>
+            <see cref="T:System.DateTime"/> 扩展类。
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.DateTimeExtension.ToUnixTimeStamp(System.DateTime)">
+            <summary>
+            将时间转换为 Unix 时间戳
+            </summary>
+            <param name="dateTime">给定的时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.DateTimeExtension.IsNull(System.DateTime)">
+            <summary>
+            日期是否为空 或 默认时间(0001-1-1 00:00:00)
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.DateTimeExtension.IsNullOrOverdue(System.DateTime)">
+            <summary>
+            日期是否为空 或 默认时间(0001-1-1 00:00:00) 或 过期 (即指定的日期是否已经超过了此时此刻)
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
         <member name="T:View.Core.Extensions.EnumExtension">
             <summary>
             枚举扩展
@@ -17,6 +43,23 @@
             <param name="_enum"></param>
             <param name="enum"></param>
             <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.EnumExtension.ToDescription(System.Enum)">
+            <summary>
+            获取枚举类型的描述。
+            </summary>
+            <param name="enum"></param>
+            <returns>枚举描述信息</returns>
+        </member>
+        <member name="T:View.Core.Extensions.LongExtension">
+            <summary>
+            <see cref="T:System.Int64"/> 扩展类。
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.LongExtension.ToDateTime(System.Int64)">
+            <summary> 
+            根据时间戳获取 Utc时间。
+            </summary>  
         </member>
         <member name="T:View.Core.Extensions.StringExtension">
             <summary>
@@ -36,6 +79,27 @@
             </summary>
             <param name="value">指定的字符串</param>
             <returns>如果参数 <paramref name="value"/> 为 <see langword="null"/> ，空字符串("")或仅由空白字符组成，则为 <see langword="true"/>；否则为 <see langword="false"/>。</returns>
+        </member>
+        <member name="M:View.Core.Extensions.StringExtension.ToDateTime(System.String)">
+            <summary> 
+            根据时间戳字符串获取 Utc时间。
+            </summary>  
+        </member>
+        <member name="T:View.Core.Values.DateTimeValue">
+            <summary>
+            日期的默认值
+            </summary>
+        </member>
+        <member name="F:View.Core.Values.DateTimeValue.Null">
+            <summary>
+            new <see cref="T:System.DateTime"/> 的值。
+            </summary>
+        </member>
+        <member name="F:View.Core.Values.DateTimeValue.UnixZero">
+            <summary>
+            Unix 时间戳 0 的值。
+            <para>ISO 8601规范 : 1970-01-01T00:00:00Z</para>
+            </summary>
         </member>
     </members>
 </doc>

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace View.Core.Extensions
 {
@@ -25,6 +25,24 @@ namespace View.Core.Extensions
 
             return (TEnum)Enum.ToObject(typeof(TEnum), _value & (~value));
 
+        }
+
+        /// <summary>
+        /// 获取枚举类型的描述。
+        /// </summary>
+        /// <param name="enum"></param>
+        /// <returns>枚举描述信息</returns>
+        public static string ToDescription(this Enum @enum)
+        {
+            Type type = @enum.GetType();
+            MemberInfo[] memInfo = type.GetMember(@enum.ToString());
+            if (null != memInfo && memInfo.Length > 0)
+            {
+                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (null != attrs && attrs.Length > 0)
+                { return ((DescriptionAttribute)attrs[0]).Description; }
+            }
+            return string.Empty;
         }
     }
 }
