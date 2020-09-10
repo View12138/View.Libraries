@@ -89,7 +89,7 @@ namespace View.Drawing.Extensions
         /// <param name="codecs">DGI 内置的编码器</param>
         /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        public static async Task<Image> ChangeQualityAsync(this Image image, int length, ImageCodecs codecs = ImageCodecs.JPEG, bool reserve = false)
+        public static async Task<Stream> ChangeQualityAsync(this Image image, int length, ImageCodecs codecs = ImageCodecs.JPEG, bool reserve = false)
             => await ChangeQualityAsync(image, length, ImageHandle.GetCodecInfo(codecs), reserve);
         /// <summary>
         /// 使用指定的编码器将图片的质量尽可能的压缩到指定的大小。
@@ -100,7 +100,7 @@ namespace View.Drawing.Extensions
         /// <param name="imageCodecInfo">指定的编码器</param>
         /// <param name="reserve">是否保留原图像</param>
         /// <returns></returns>
-        public static async Task<Image> ChangeQualityAsync(this Image image, int length, ImageCodecInfo imageCodecInfo, bool reserve = false)
+        public static async Task<Stream> ChangeQualityAsync(this Image image, int length, ImageCodecInfo imageCodecInfo, bool reserve = false)
         {
             return await Task.Run(() =>
             {
@@ -116,7 +116,7 @@ namespace View.Drawing.Extensions
                     {
                         if (!reserve) { image.Dispose(); }
                         stream.Position = 0;
-                        return Image.FromStream(stream);
+                        return stream;
                     }
                     else
                     { stream.Dispose(); }

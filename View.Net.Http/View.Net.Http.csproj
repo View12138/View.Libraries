@@ -2,26 +2,35 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>View</Authors>
-    <Description>View 的框架基础。</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageIcon>View.Logo.png</PackageIcon>
+    <Version>0.0.7</Version>
+    <Authors>View</Authors>
+    <Description>适用于 JSON 作为传输载体的 HTTP 请求方法类库。</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>View.Logo.png</PackageIcon>
     <PackageProjectUrl>https://github.com/View12138/View.Libraries.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>framework</PackageTags>
-    <Version>0.0.3</Version>
+    <PackageTags>HttpClient, RESTFul API, Extension</PackageTags>
+    <Copyright>Copyright 2020</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Core\View.Core.xml</DocumentationFile>
+    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Net.Http\View.Net.Http.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Core\View.Core.xml</DocumentationFile>
+    <DocumentationFile>C:\Project\view\dotnet\View.Libraries\View.Net.Http\View.Net.Http.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\View.Core\View.Core.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\..\..\View.local.Packages\Icons\View.Logo.png">
@@ -32,10 +41,6 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

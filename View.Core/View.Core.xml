@@ -85,6 +85,100 @@
             根据时间戳字符串获取 Utc时间。
             </summary>  
         </member>
+        <member name="T:View.Core.Models.IEntity">
+            <summary>
+            实体类 接口
+            </summary>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToByteArrayContent">
+            <summary>
+            将实体转换为 基于字节数组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToFormUrlEncodedContent">
+            <summary>
+            将实体转换为 使用 <see langword="application/x-www-form-urlencoded MIME"/>  类型编码的名称/值元组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToMultipartContent">
+            <summary>
+            将实体转换为 使用多部分 <see langword="/*"/> 内容类型的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToMultipartFormDataContent">
+            <summary>
+            将实体转换为 使用 <see langword="multipart/form-data MIME"/>  类型进行编码的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToStreamContent">
+            <summary>
+            将实体转换为 基于流的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToStringContent">
+            <summary>
+            将实体转换为 基于字符串的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.IEntity.ToQuery">
+            <summary>
+            将实体转换为 查询字符串。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:View.Core.Models.Entity">
+            <summary>
+            所有实体类的基类。
+            </summary>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToByteArrayContent">
+            <summary>
+            将实体转换为 基于字节数组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToFormUrlEncodedContent">
+            <summary>
+            将实体转换为 使用 <see langword="application/x-www-form-urlencoded MIME"/>  类型编码的名称/值元组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToMultipartContent">
+            <summary>
+            将实体转换为 使用多部分 <see langword="/*"/> 内容类型的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToMultipartFormDataContent">
+            <summary>
+            将实体转换为 使用 <see langword="multipart/form-data MIME"/>  类型进行编码的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToStreamContent">
+            <summary>
+            将实体转换为 基于流的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToStringContent">
+            <summary>
+            将实体转换为 基于字符串的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Models.Entity.ToQuery">
+            <summary>
+            将实体转换为 查询字符串。
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:View.Core.Values.DateTimeValue">
             <summary>
             日期的默认值

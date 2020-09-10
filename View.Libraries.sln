@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Core", "View.Core\View
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.VisualStudio.TextTemplating", "View.VisualStudio.TextTemplating\View.VisualStudio.TextTemplating.csproj", "{2C3482B4-CC2E-4BC9-8506-915C3202804B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.Net.Http", "View.Net.Http\View.Net.Http.csproj", "{AEA2D814-19BA-4590-BA42-D6436C83D2D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{2C3482B4-CC2E-4BC9-8506-915C3202804B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C3482B4-CC2E-4BC9-8506-915C3202804B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C3482B4-CC2E-4BC9-8506-915C3202804B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA2D814-19BA-4590-BA42-D6436C83D2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA2D814-19BA-4590-BA42-D6436C83D2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA2D814-19BA-4590-BA42-D6436C83D2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA2D814-19BA-4590-BA42-D6436C83D2D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
