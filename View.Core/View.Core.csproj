@@ -12,7 +12,8 @@
     <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>framework</PackageTags>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
+    <PackageReleaseNotes>分页查询模型, 递归查找 List 构成的树</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
