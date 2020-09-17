@@ -73,6 +73,59 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:View.Data.Sql.Extensions.IDbConnectionExtension">
+            <summary>
+            IDbConnection 扩展类
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.IDbConnectionExtension.GetPaginationResultAsync``1(System.Data.IDbConnection,View.Core.Models.Pagination,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            分页获取指定的实体类。
+            <para>默认使用条件表达式，当条件表达式无法完成筛选时使用 where 子句</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="db"></param>
+            <param name="pagination">分页标记</param>
+            <param name="predicate">条件表达式</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.IDbConnectionExtension.GetPaginationResultAsync``1(System.Data.IDbConnection,View.Core.Models.Pagination,System.String)">
+            <summary>
+            分页获取指定的实体类。
+            <para>不首先使用此表达式</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="db"></param>
+            <param name="pagination">分页标记</param>
+            <param name="condition">where 子句</param>
+            <returns></returns>
+        </member>
+        <member name="T:View.Data.Sql.Extensions.ExpressionExtension">
+            <summary>
+            表达式扩展
+            </summary>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.ExpressionExtension.GetOperator(System.Linq.Expressions.ExpressionType)">
+            <summary>
+            获取运算符
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.ExpressionExtension.ExpressionToSql(System.Linq.Expressions.Expression)">
+            <summary>
+            将拉姆达表达式转换为 SQL 子句
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.ExpressionExtension.ObjectToString(System.Object)">
+            <summary>
+            将对象的值转换为 SQL 中表达形式
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="T:View.Data.Sql.Extensions.SQLOperatorExtension">
             <summary>
             <see langword="SQL"/> 操作语句构建类。
@@ -283,11 +336,6 @@
             数据库连接字符串。
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:View.Data.Sql.Models.IEntity">
-            <summary>
-            实体模型
-            </summary>
         </member>
         <member name="T:View.Data.Sql.Models.LikeType">
             <summary>

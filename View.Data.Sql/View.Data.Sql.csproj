@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>View</Authors>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>View.Logo.png</PackageIcon>
     <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
@@ -13,6 +13,7 @@
     <Description>和数据库相关的内容。</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>新增分页查询扩展方法, 支持使用 Lambda 表达式构建查询条件.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -32,6 +33,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper.Contrib" Version="2.0.35" />
   </ItemGroup>
 
   <ItemGroup>
