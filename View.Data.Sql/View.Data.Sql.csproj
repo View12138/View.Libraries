@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>View</Authors>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>View.Logo.png</PackageIcon>
     <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>

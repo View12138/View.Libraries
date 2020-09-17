@@ -41,7 +41,7 @@ namespace View.Data.Sql.Extensions
 
             string _condition = "";
             if (predicate != null)
-            { _condition = $"(and {ExpressionExtension.ExpressionToSql(predicate)})"; }
+            { _condition = $"and {ExpressionExtension.ExpressionToSql(predicate)}"; }
             string sql = $"{tableName} where true {_condition}";
             string sqlPage = $"select * from {sql} limit {(pagination.Index - 1) * pagination.Size},{pagination.Size}";
             var resultData = await db.QueryAsync<T>(sqlPage); // 获取分页结果
