@@ -34,6 +34,8 @@ namespace View.Data.Sql.Extensions
         /// <returns>根据类型使用或不使用 '' 包裹值</returns>
         public static string GetValue(this object value)
         {
+            if(value is Enum)
+            { return $"{Convert.ToInt32(value)}"; }
             if (value is string || value is char)
             { return $"'{value}'"; }
             else if (value is DateTime)

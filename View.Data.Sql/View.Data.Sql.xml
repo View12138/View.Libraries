@@ -100,6 +100,24 @@
             <param name="condition">where 子句</param>
             <returns></returns>
         </member>
+        <member name="M:View.Data.Sql.Extensions.IDbConnectionExtension.QueryAsync``1(System.Data.IDbConnection,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            获取满足条件的实体.
+            <para>使用 Lambda 表达式表达条件</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="db"></param>
+            <param name="predicate">Lambda 表达式</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Data.Sql.Extensions.IDbConnectionExtension.CreateTable``1(System.Data.IDbConnection)">
+            <summary>
+            构造 create table 语句。
+            </summary>
+            <typeparam name="T">模型类型</typeparam>
+            <param name="db"></param>
+            <returns>create table <see langword="SQL"/> 语句</returns>
+        </member>
         <member name="T:View.Data.Sql.Extensions.ExpressionExtension">
             <summary>
             表达式扩展

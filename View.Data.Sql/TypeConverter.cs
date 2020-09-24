@@ -81,10 +81,12 @@ namespace View.Data.Sql
         /// <returns><see langword="SQL"/> 通用数据类型</returns>
         public static SqlType TypeToSsqlType(Type type)
         {
+            if (type.BaseType == typeof(Enum))
+            { type = typeof(int); }
             if (type.Name == typeof(short).Name)
             { return SqlType.SmallInt; }
             else if (type.Name == typeof(int).Name)
-            { return SqlType.Int; }
+            { return SqlType.Integer; }
             else if (type.Name == typeof(long).Name)
             { return SqlType.BigInt; }
             else if (type.Name == typeof(float).Name)
@@ -140,16 +142,18 @@ namespace View.Data.Sql
         /// <returns></returns>
         public static int GetLength(Type type)
         {
+            if (type.BaseType == typeof(Enum))
+            { type = typeof(int); }
             if (type.Name == typeof(short).Name)
-            { return sizeof(short); }
+            { return 5; }
             else if (type.Name == typeof(int).Name)
-            { return sizeof(int); }
+            { return 10; }
             else if (type.Name == typeof(long).Name)
-            { return sizeof(long); }
+            { return 19; }
             else if (type.Name == typeof(float).Name)
-            { return sizeof(float); }
+            { return 16; }
             else if (type.Name == typeof(double).Name)
-            { return sizeof(double); }
+            { return 16; }
             else if (type.Name == typeof(decimal).Name)
             { return sizeof(decimal); }
             else if (type.Name == typeof(byte[]).Name)

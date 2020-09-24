@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using View.Core.Attributes;
 using View.Core.Extensions;
 using View.Core.Models;
 
@@ -18,6 +19,20 @@ namespace View.Data.Sql.Extensions
     /// </summary>
     public static class IDbConnectionExtension
     {
+        private static string GetTableName<T>() where T : IEntity
+        {
+            var type = typeof(T);
+            string tableName = type.Name.ToLower();
+            object[] attributes = type.GetCustomAttributes(typeof(TableAttribute), true);
+            foreach (object attribute in attributes)
+            {
+                if (attribute is TableAttribute table)
+                { tableName = table.Name; break; }
+            }
+
+            return tableName;
+        }
+
         /// <summary>
         /// 分页获取指定的实体类。
         /// <para>默认使用条件表达式，当条件表达式无法完成筛选时使用 where 子句</para>
@@ -29,23 +44,11 @@ namespace View.Data.Sql.Extensions
         /// <returns></returns>
         public static async Task<PaginationResult<IEnumerable<T>>> GetPaginationResultAsync<T>(this IDbConnection db, Pagination pagination, Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
-            var type = typeof(T);
-
-            string tableName = type.Name.ToLower();
-            object[] attributes = type.GetCustomAttributes(typeof(TableAttribute), true);
-            foreach (object attribute in attributes)
-            {
-                if (attribute is TableAttribute table)
-                { tableName = table.Name; break; }
-            }
-
-            string _condition = "";
-            if (predicate != null)
-            { _condition = $"and {ExpressionExtension.ExpressionToSql(predicate)}"; }
-            string sql = $"{tableName} where true {_condition}";
-            string sqlPage = $"select * from {sql} limit {(pagination.Index - 1) * pagination.Size},{pagination.Size}";
+            string _condition = predicate == null ? string.Empty : $"where {ExpressionExtension.ExpressionToSql(predicate)}";
+            string sqlCondition = $"{GetTableName<T>()} {_condition}";
+            string sqlPage = $"select * from {sqlCondition} limit {(pagination.Index - 1) * pagination.Size},{pagination.Size}";
             var resultData = await db.QueryAsync<T>(sqlPage); // 获取分页结果
-            int count = await db.QueryFirstAsync<int>($"select count(*) from {sql}"); // 总条目数
+            int count = await db.QueryFirstAsync<int>($"select count(*) from {sqlCondition}"); // 总条目数
 
             return pagination.GetResult(resultData, count);
         }
@@ -60,24 +63,72 @@ namespace View.Data.Sql.Extensions
         /// <returns></returns>
         public static async Task<PaginationResult<IEnumerable<T>>> GetPaginationResultAsync<T>(this IDbConnection db, Pagination pagination, string condition = "") where T : IEntity
         {
-            var type = typeof(T);
-
-            string tableName = type.Name.ToLower();
-            object[] attributes = type.GetCustomAttributes(typeof(TableAttribute), true);
-            foreach (object attribute in attributes)
-            {
-                if (attribute is TableAttribute table)
-                { tableName = table.Name; break; }
-            }
-            string _condition = "";
-            if (!condition.IsNullOrWhiteSpace())
-            { _condition = $"and {condition}"; }
-            string sql = $"{tableName} where true {_condition}";
-            string sqlPage = $"select * from {sql} limit {(pagination.Index - 1) * pagination.Size},{pagination.Size}";
+            string _condition = condition.IsNullOrWhiteSpace() ? string.Empty : $"where {condition}";
+            string sqlCondition = $"{GetTableName<T>()} {_condition}";
+            string sqlPage = $"select * from {sqlCondition} limit {(pagination.Index - 1) * pagination.Size},{pagination.Size}";
+            string sqlCount = $"select count(*) from {sqlCondition}";
             var resultData = await db.QueryAsync<T>(sqlPage); // 获取分页结果
-            int count = await db.QueryFirstAsync<int>($"select count(*) from {sql}"); // 总条目数
+            int count = await db.QueryFirstAsync<int>(sqlCount); // 总条目数
 
             return pagination.GetResult(resultData, count);
+        }
+
+        /// <summary>
+        /// 获取满足条件的实体.
+        /// <para>使用 Lambda 表达式表达条件</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="db"></param>
+        /// <param name="predicate">Lambda 表达式</param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<T>> QueryAsync<T>(this IDbConnection db, Expression<Func<T, bool>> predicate = null) where T : IEntity
+        {
+            string _condition = predicate == null ? string.Empty : $"where {ExpressionExtension.ExpressionToSql(predicate)}";
+            return await db.QueryAsync<T>($"select * from {GetTableName<T>()} {_condition}");
+        }
+
+        /// <summary>
+        /// 构造 create table 语句。
+        /// </summary>
+        /// <typeparam name="T">模型类型</typeparam>
+        /// <param name="db"></param>
+        /// <returns>create table <see langword="SQL"/> 语句</returns>
+        public static bool CreateTable<T>(this IDbConnection db) where T : IEntity
+        {
+            var type = typeof(T);
+            string tableName = GetTableName<T>();
+
+            PropertyInfo[] properties = type.GetProperties();
+            List<string> _fields = new List<string>();
+            foreach (PropertyInfo property in properties)
+            {
+                string _sqlType = TypeConverter.SqlTypeToString(TypeConverter.TypeToSsqlType(property.PropertyType));
+                string length = TypeConverter.GetLength(property.PropertyType) == 0 ? "" : $"({TypeConverter.GetLength(property.PropertyType)})";
+
+                LengthAttribute lengthAttribute = property.GetCustomAttribute<LengthAttribute>();
+                if (lengthAttribute?.Size > 0) { length = $"({lengthAttribute.Size})"; }
+                if (lengthAttribute?.Size == 0) { length = ""; }
+
+                string _constraint = "";
+
+                if (property.GetCustomAttribute<KeyAttribute>() != null || property.GetCustomAttribute<ExplicitKeyAttribute>() != null)
+                { _constraint += $" NOT NULL PRIMARY KEY"; }
+                if (property.GetCustomAttribute<NotNullAttribute>() != null)
+                { _constraint += $" NOT NULL"; }
+                if (property.GetCustomAttribute<UniqueAttribute>() != null)
+                { _constraint += $" UNIQUE"; }
+                if (property.GetCustomAttribute<AutoIncrementAttribute>() != null)
+                { _constraint += $" AUTOINCREMENT"; }
+                DefaultAttribute defaultAttribute = property.GetCustomAttribute<DefaultAttribute>();
+                if (defaultAttribute?.Value != null)
+                { _constraint += $" DEFAULT {defaultAttribute.Value.GetValue()}"; }
+
+                _fields.Add($"{property.Name.GetField()} {_sqlType}{length}{_constraint}");
+            }
+            string fiels = string.Join(",\n", _fields);
+            db.Execute($"DROP TABLE IF EXISTS  {tableName};");
+            db.Execute($"CREATE TABLE {tableName} ({fiels});");
+            return true;
         }
     }
 
