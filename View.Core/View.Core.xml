@@ -4,6 +4,58 @@
         <name>View.Core</name>
     </assembly>
     <members>
+        <member name="T:View.Core.Attributes.NotNullAttribute">
+            <summary>
+            指定实体字段的 NOT NULL 约束。
+            <para>不为空</para>
+            </summary>
+        </member>
+        <member name="T:View.Core.Attributes.UniqueAttribute">
+            <summary>
+            指定实体字段的 UNIQUE 约束。
+            <para>唯一</para>
+            </summary>
+        </member>
+        <member name="T:View.Core.Attributes.AutoIncrementAttribute">
+            <summary>
+            指定实体字段的 AUTOINCREMENT 约束。
+            <para>自增</para>
+            </summary>
+        </member>
+        <member name="T:View.Core.Attributes.DefaultAttribute">
+            <summary>
+            指定实体字段的 DEFAULT 约束。
+            <para>默认值</para>
+            </summary>
+        </member>
+        <member name="M:View.Core.Attributes.DefaultAttribute.#ctor(System.Object)">
+            <summary>
+            指定字段的默认值
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:View.Core.Attributes.DefaultAttribute.Value">
+            <summary>
+            获取默认值
+            </summary>
+        </member>
+        <member name="T:View.Core.Attributes.LengthAttribute">
+            <summary>
+            指定实体字段的长度。
+            <para>字段大小</para>
+            </summary>
+        </member>
+        <member name="M:View.Core.Attributes.LengthAttribute.#ctor(System.Int32)">
+            <summary>
+            指定实体类型的字段的长度
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="P:View.Core.Attributes.LengthAttribute.Size">
+            <summary>
+            获取指定的长度
+            </summary>
+        </member>
         <member name="T:View.Core.Extensions.DateTimeExtension">
             <summary>
             <see cref="T:System.DateTime"/> 扩展类。
@@ -35,13 +87,13 @@
             枚举扩展
             </summary>
         </member>
-        <member name="M:View.Core.Extensions.EnumExtension.Remove``1(``0,``0)">
+        <member name="M:View.Core.Extensions.EnumExtension.Remove``1(System.Enum,``0)">
             <summary>
             移除位域枚举中指定的值
             </summary>
             <typeparam name="TEnum"></typeparam>
-            <param name="_enum"></param>
             <param name="enum"></param>
+            <param name="_enum"></param>
             <returns></returns>
         </member>
         <member name="M:View.Core.Extensions.EnumExtension.ToDescription(System.Enum)">
@@ -262,12 +314,12 @@
             日期的默认值
             </summary>
         </member>
-        <member name="F:View.Core.Values.DateTimeValue.Null">
+        <member name="P:View.Core.Values.DateTimeValue.Null">
             <summary>
             new <see cref="T:System.DateTime"/> 的值。
             </summary>
         </member>
-        <member name="F:View.Core.Values.DateTimeValue.UnixZero">
+        <member name="P:View.Core.Values.DateTimeValue.UnixZero">
             <summary>
             Unix 时间戳 0 的值。
             <para>ISO 8601规范 : 1970-01-01T00:00:00Z</para>
