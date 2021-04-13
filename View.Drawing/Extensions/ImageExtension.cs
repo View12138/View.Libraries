@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using View.Drawing.Extensions.Models;
-using ImageEncoder = System.Drawing.Imaging.Encoder;
-using ImageEncoderValue = System.Drawing.Imaging.EncoderValue;
 
 namespace View.Drawing.Extensions
 {
@@ -19,89 +19,57 @@ namespace View.Drawing.Extensions
     {
         /// <summary>
         /// 按原图宽高比尽可能的将原图高质量的缩放到新的尺寸中。
-        /// <para>新的图像尺寸不会超过给定的尺寸</para>
-        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
+        /// <para>按照指定的缩放模式(<see cref="ChangeSizeConfiguration.SizeMode"/>) 进行缩放</para>
         /// </summary>
         /// <param name="image"></param>
-        /// <param name="size"></param>
-        /// <param name="reserve">是否保留原图像</param>
+        /// <param name="size">限定的大小</param>
+        /// <param name="configuration">修改图像时应用的配置</param>
         /// <returns></returns>
-        public static Image ChangeSize(this Image image, Size size, bool reserve = false) 
+        public static Image ChangeSize(this Image image, Size size, ChangeSizeConfiguration configuration = null)
         {
             if (image is null)
             { throw new ArgumentNullException(nameof(image)); }
 
-            Size newSize = ImageHandle.SizeToSize(image.Size, size);
+            if (configuration == null)
+            { configuration = default; }
+
+            Size newSize = ImageHandle.SizeToSize(image.Size, size, configuration.SizeMode);
             Bitmap destBitmap;
-            if (ImageHandle.IsIndexedPixelFormat(image.PixelFormat))
+            if (ImageHandle.IsErrorPixelFormat(image.PixelFormat))
             {
                 destBitmap = new Bitmap(newSize.Width, newSize.Height, PixelFormat.Format32bppArgb);
                 using (Graphics g = Graphics.FromImage(destBitmap))
-                {
-                    g.DrawImage(image, 0, 0);
-                }
+                { g.DrawImage(image, 0, 0); }
             }
             else
+            { destBitmap = new Bitmap(newSize.Width, newSize.Height, image.PixelFormat); }
+
+            using (Graphics g = Graphics.FromImage(destBitmap))
             {
-                destBitmap = new Bitmap(newSize.Width, newSize.Height, image.PixelFormat);
+                g.CompositingQuality = configuration.CompositingQuality;
+                g.SmoothingMode = configuration.SmoothingMode;
+                g.InterpolationMode = configuration.InterpolationMode;
+                g.CompositingMode = configuration.CompositingMode;
+                g.PixelOffsetMode = configuration.PixelOffsetMode;
+                g.TextRenderingHint = configuration.TextRenderingHint;
+                g.Clear(Color.Transparent);
+                g.DrawImage(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(0, 0), image.Size), GraphicsUnit.Pixel);
             }
-            Graphics.FromImage(destBitmap)
-                    .SetCompositingQuality(CompositingQuality.HighQuality)
-                    .SetSmoothingMode(SmoothingMode.HighQuality)
-                    .SetInterpolationMode(InterpolationMode.HighQualityBicubic)
-                    .SetCompositingMode(CompositingMode.SourceCopy)
-                    .SetPixelOffsetMode(PixelOffsetMode.HighQuality)
-                    .ClearEx(Color.Transparent)
-                    .DrawImageEx(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(0, 0), image.Size), GraphicsUnit.Pixel)
-                    .Dispose();
-            if (!reserve) { image.Dispose(); }
+
+            if (!configuration.Reserve) { image.Dispose(); }
             return destBitmap;
         }
-
-        /// <summary>
-        /// 将此 <see cref="Image"/> 中每个像素的颜色数据格式改为指定的颜色数据格式。
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="pixelFormat">指定的颜色数据格式。</param>
-        /// <returns></returns>
-        [Obsolete]
-        public static Image ChangePixelFormat(this Image image, PixelFormat pixelFormat)
-        {
-            if (image.PixelFormat != pixelFormat)
-            {
-                Bitmap destBitmap = new Bitmap(image.Width, image.Height, pixelFormat);
-                Graphics.FromImage(destBitmap)
-                        .DrawImageEx(image, new Rectangle(new Point(0, 0), image.Size))
-                        .Dispose();
-                image.Dispose();
-                return destBitmap;
-            }
-            else
-            { return image; }
-        }
-
-        /// <summary>
-        /// 使用 DGI 内置的编码器将图片的质量尽可能的压缩到指定的大小。
-        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="length">指定的文件大小 ( 单位: <see langword="KB"/> )</param>
-        /// <param name="codecs">DGI 内置的编码器</param>
-        /// <param name="reserve">是否保留原图像</param>
-        /// <returns></returns>
-        public static async Task<Stream> ChangeQualityAsync(this Image image, int length, ImageCodecs codecs = ImageCodecs.JPEG, bool reserve = false)
-            => await ChangeQualityAsync(image, length, ImageHandle.GetCodecInfo(codecs), reserve);
         /// <summary>
         /// 使用指定的编码器将图片的质量尽可能的压缩到指定的大小。
-        /// <para>原图像将会被 <see cref="Image.Dispose()"/>；如果想保留原图像，请使用 <paramref name="reserve"/> 参数。</para>
         /// </summary>
         /// <param name="image"></param>
         /// <param name="length">指定的文件大小 ( 单位: <see langword="KB"/> )</param>
-        /// <param name="imageCodecInfo">指定的编码器</param>
-        /// <param name="reserve">是否保留原图像</param>
+        /// <param name="configuration">配置</param>
         /// <returns></returns>
-        public static async Task<Stream> ChangeQualityAsync(this Image image, int length, ImageCodecInfo imageCodecInfo, bool reserve = false)
+        public static async Task<Stream> ChangeQualityAsync(this Image image, int length, ChangeQualityConfiguration configuration = null)
         {
+            if (configuration == null)
+            { configuration = default; }
             return await Task.Run(() =>
             {
                 int quality = 100;
@@ -109,12 +77,11 @@ namespace View.Drawing.Extensions
                 do
                 {
                     Stream stream = new MemoryStream();
-                    image.Save(stream, imageCodecInfo, ImageHandle.GetQualityParam(quality));
-                    //quality -= (int)Math.Pow(Math.Abs(stream.Length - length), 0.15);
-                    quality -= 5;
-                    if (quality < 5 || stream.Length < length) // 无法继续降低质量了
+                    image.Save(stream, configuration.ImageEncodecInfo, ImageHandle.GetQualityParam(quality));
+                    quality -= configuration.Interval;
+                    if (quality < configuration.MinQuality || stream.Length < length) // 无法继续降低质量了
                     {
-                        if (!reserve) { image.Dispose(); }
+                        if (!configuration.Reserve) { image.Dispose(); }
                         stream.Position = 0;
                         return stream;
                     }
@@ -123,6 +90,46 @@ namespace View.Drawing.Extensions
 
                 } while (true);
             });
+        }
+
+        /// <summary>
+        /// 修改原图的像素格式。
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="pixelFormat"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static Image ChangePixelFormat(this Image image, PixelFormat pixelFormat, GraphicsConfiguration configuration = null)
+        {
+            if (ImageHandle.IsErrorPixelFormat(pixelFormat))
+            { throw new ArgumentException($"{nameof(pixelFormat)} 不是有效的值。"); }
+
+            if (configuration == null)
+            { configuration = default; }
+
+            if (image.PixelFormat == pixelFormat)
+            {
+                if (!configuration.Reserve)
+                { image.Dispose(); }
+                return image.Clone() as Image;
+            }
+            else
+            {
+                Bitmap bitmap = new Bitmap(image.Width, image.Height, pixelFormat);
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CompositingQuality = configuration.CompositingQuality;
+                    g.SmoothingMode = configuration.SmoothingMode;
+                    g.InterpolationMode = configuration.InterpolationMode;
+                    g.CompositingMode = configuration.CompositingMode;
+                    g.PixelOffsetMode = configuration.PixelOffsetMode;
+                    g.TextRenderingHint = configuration.TextRenderingHint;
+                    g.DrawImage(image, 0, 0, image.Width, image.Height);
+                }
+                if (!configuration.Reserve)
+                { image.Dispose(); }
+                return bitmap;
+            }
         }
 
         /// <summary>
@@ -326,17 +333,24 @@ namespace View.Drawing.Extensions
     }
 
     /// <summary>
-    /// 内部使用
+    /// 一些辅助方法
     /// </summary>
-    static class ImageHandle
+    public static class ImageHandle
     {
         /// <summary>
-        /// 获取指定名称的 <see cref="ImageCodecInfo"/>
+        /// 获取 GDI+ 中内置的指定的图像编码器。
         /// </summary>
-        /// <param name="ext"></param>
+        /// <param name="encoders">指定的图像编码器</param>
         /// <returns></returns>
-        public static ImageCodecInfo GetCodecInfo(ImageCodecs ext)
-            => ImageCodecInfo.GetImageEncoders().ToList().Find(info => info.FormatDescription.Equals(ext.ToString().ToUpper()));
+        public static ImageCodecInfo GetGDIPlusImageEncoders(ImageEncoders encoders)
+            => ImageCodecInfo.GetImageEncoders().Where(x => x.FormatDescription == encoders.ToString()).FirstOrDefault();
+        /// <summary>
+        /// 获取 GDI+ 中内置的指定的图像解码器。
+        /// </summary>
+        /// <param name="decoders">指定的图像解码器</param>
+        /// <returns></returns>
+        public static ImageCodecInfo GetGDIPlusImageDecoders(ImageDecoders decoders)
+            => ImageCodecInfo.GetImageDecoders().Where(x => x.FormatDescription == decoders.ToString()).FirstOrDefault();
 
         /// <summary>
         /// 获取指定的质量参数
@@ -344,56 +358,61 @@ namespace View.Drawing.Extensions
         /// <param name="quality">质量，[1-100]之间</param>
         /// <returns></returns>
         public static EncoderParameters GetQualityParam(int quality)
-            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(ImageEncoder.Quality, new long[] { quality }) } };
-        /// <summary>
-        /// 获取指定的质量参数
-        /// </summary>
-        /// <param name="encoder">参数</param>
-        /// <param name="value">值</param>
-        /// <returns></returns>
-        public static EncoderParameters GetEncoderParam(ImageEncoder encoder, ImageEncoderValue value)
-            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(encoder, new long[] { (long)value }) } };
+            => new EncoderParameters() { Param = new EncoderParameter[] { new EncoderParameter(Encoder.Quality, quality) } };
 
         /// <summary>
         /// 调整尺寸
         /// </summary>
         /// <param name="oldSize"></param>
         /// <param name="newSize"></param>
+        /// <param name="mode"></param>
         /// <returns></returns>
-        public static Size SizeToSize(Size oldSize, Size newSize)
+        public static Size SizeToSize(Size oldSize, Size newSize, SizeMode mode)
         {
-            // scale : 宽高比 ; 宽 = scale × 高 ; 高 = 宽 ÷ scale .
+            // scale : 宽高比 ;
+            // 宽 = scale × 高 ; 高 = 宽 ÷ scale .
             var scale = oldSize.Width / (oldSize.Height * 1.0);
-            if ((int)(scale * newSize.Height) < newSize.Width)
-            { return new Size((int)(scale * newSize.Height), newSize.Height); }
+            if (mode == SizeMode.ToIn)
+            {
+                if ((int)(scale * newSize.Height) < newSize.Width)
+                { return new Size((int)(scale * newSize.Height), newSize.Height); }
+                else
+                { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
+            }
             else
-            { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
+            {
+                if ((int)(scale * newSize.Height) < newSize.Width)
+                { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
+                else
+                { return new Size((int)(scale * newSize.Height), newSize.Height); }
+            }
         }
 
         /// <summary>
-        /// 判断图片是否索引像素格式,是否是引发异常的像素格式
+        /// 是否是引发异常的像素的颜色数据的格式。
         /// </summary>
-        /// <param name="imagePixelFormat">图片的像素格式</param>
+        /// <param name="imagePixelFormat">像素的颜色数据的格式</param>
         /// <returns></returns>
-        public static bool IsIndexedPixelFormat(PixelFormat imagePixelFormat)
+        public static bool IsErrorPixelFormat(PixelFormat imagePixelFormat)
         {
-            PixelFormat[] pixelFormatArray = {
-                                            PixelFormat.Format1bppIndexed
-                                            ,PixelFormat.Format4bppIndexed
-                                            ,PixelFormat.Format8bppIndexed
-                                            ,PixelFormat.Undefined
-                                            ,PixelFormat.DontCare
-                                            ,PixelFormat.Format16bppArgb1555
-                                            ,PixelFormat.Format16bppGrayScale
-                                        };
-            foreach (PixelFormat pf in pixelFormatArray)
+            PixelFormat[] pixelFormatArray = new PixelFormat[]
             {
-                if (imagePixelFormat == pf)
-                {
-                    return true;
-                }
-            }
-            return false;
+                PixelFormat.Undefined,
+                PixelFormat.DontCare,
+                PixelFormat.Max,
+                PixelFormat.Indexed,
+                PixelFormat.Gdi,
+                PixelFormat.Alpha,
+                PixelFormat.PAlpha,
+                PixelFormat.Extended,
+                PixelFormat.Canonical,
+                PixelFormat.Format1bppIndexed,
+                PixelFormat.Format4bppIndexed,
+                PixelFormat.Format8bppIndexed,
+                PixelFormat.Format16bppArgb1555,
+                PixelFormat.Format16bppGrayScale,
+            };
+            return pixelFormatArray.Contains(imagePixelFormat);
         }
     }
 }

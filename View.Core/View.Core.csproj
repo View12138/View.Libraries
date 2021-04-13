@@ -12,8 +12,9 @@
     <RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>framework</PackageTags>
-    <Version>0.0.6</Version>
+    <Version>0.1.0</Version>
     <PackageReleaseNotes>新增 标记数据库字段自增的 特性类</PackageReleaseNotes>
+    <RootNamespace>View.Core</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -36,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Attributes\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

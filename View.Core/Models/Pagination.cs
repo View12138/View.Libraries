@@ -21,7 +21,7 @@ namespace View.Core.Models
         /// </summary>
         /// <param name="index"></param>
         /// <param name="size"></param>
-        public Pagination(int index = 0, int size = 10)
+        public Pagination(int index = 1, int size = 10)
         {
             Index = index;
             Size = size;

@@ -22,7 +22,7 @@ namespace View.Core.Extensions
 
             int value = Convert.ToInt32(@enum);
             int _value = Convert.ToInt32(_enum);
-            
+
             return (TEnum)Enum.ToObject(typeof(TEnum), value & (~_value));
 
         }
@@ -35,14 +35,9 @@ namespace View.Core.Extensions
         public static string ToDescription(this Enum @enum)
         {
             Type type = @enum.GetType();
-            MemberInfo[] memInfo = type.GetMember(@enum.ToString());
-            if (null != memInfo && memInfo.Length > 0)
-            {
-                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (null != attrs && attrs.Length > 0)
-                { return ((DescriptionAttribute)attrs[0]).Description; }
-            }
-            return string.Empty;
+            FieldInfo field = type.GetField(Enum.GetName(type, @enum));
+            var description = field.GetCustomAttribute<DescriptionAttribute>(true);
+            return description?.Description;
         }
     }
 }

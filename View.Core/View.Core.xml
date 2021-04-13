@@ -4,68 +4,17 @@
         <name>View.Core</name>
     </assembly>
     <members>
-        <member name="T:View.Core.Attributes.NotNullAttribute">
-            <summary>
-            指定实体字段的 NOT NULL 约束。
-            <para>不为空</para>
-            </summary>
-        </member>
-        <member name="T:View.Core.Attributes.UniqueAttribute">
-            <summary>
-            指定实体字段的 UNIQUE 约束。
-            <para>唯一</para>
-            </summary>
-        </member>
-        <member name="T:View.Core.Attributes.AutoIncrementAttribute">
-            <summary>
-            指定实体字段的 AUTOINCREMENT 约束。
-            <para>自增</para>
-            </summary>
-        </member>
-        <member name="T:View.Core.Attributes.DefaultAttribute">
-            <summary>
-            指定实体字段的 DEFAULT 约束。
-            <para>默认值</para>
-            </summary>
-        </member>
-        <member name="M:View.Core.Attributes.DefaultAttribute.#ctor(System.Object)">
-            <summary>
-            指定字段的默认值
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="P:View.Core.Attributes.DefaultAttribute.Value">
-            <summary>
-            获取默认值
-            </summary>
-        </member>
-        <member name="T:View.Core.Attributes.LengthAttribute">
-            <summary>
-            指定实体字段的长度。
-            <para>字段大小</para>
-            </summary>
-        </member>
-        <member name="M:View.Core.Attributes.LengthAttribute.#ctor(System.Int32)">
-            <summary>
-            指定实体类型的字段的长度
-            </summary>
-            <param name="size"></param>
-        </member>
-        <member name="P:View.Core.Attributes.LengthAttribute.Size">
-            <summary>
-            获取指定的长度
-            </summary>
-        </member>
         <member name="T:View.Core.Extensions.DateTimeExtension">
             <summary>
             <see cref="T:System.DateTime"/> 扩展类。
             </summary>
         </member>
-        <member name="M:View.Core.Extensions.DateTimeExtension.ToUnixTimeStamp(System.DateTime)">
+        <member name="M:View.Core.Extensions.DateTimeExtension.ToUnixTimeStamp(System.DateTime,View.Core.Models.UnixTimeStampUnit)">
             <summary>
             将时间转换为 Unix 时间戳
             </summary>
             <param name="dateTime">给定的时间</param>
+            <param name="unit">Unix 时间戳单位</param>
             <returns></returns>
         </member>
         <member name="M:View.Core.Extensions.DateTimeExtension.IsNull(System.DateTime)">
@@ -103,6 +52,198 @@
             <param name="enum"></param>
             <returns>枚举描述信息</returns>
         </member>
+        <member name="T:View.Core.Extensions.ExpressionToSqlExtension">
+            <summary>
+            Lambda 表达式扩展
+            </summary>
+        </member>
+        <member name="T:View.Core.Extensions.ExpressionToSqlExtension.ExpressHandler">
+            <summary>
+            内部处理方法
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ExpressHandler.ToSql(System.Linq.Expressions.ExpressionType)">
+            <summary>
+            运算符 解析
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ExpressHandler.ToSqlValue(System.Object)">
+            <summary>
+            将常量表达式转换为 <see langword="SQL"/> 值形式。
+            <para>
+            • <see cref="T:System.String"/>、<see cref="T:System.Char"/>、<see cref="T:System.DateTime"/> 类型 使用 <c>''</c> 包裹 <br />
+            • <see cref="T:System.DateTime"/> 类型 的数据使用 <see cref="P:View.Core.Extensions.ExpressionToSqlExtension.DateTimeFormat"/> 格式化 <br />
+            • <see cref="T:System.Boolean"/> 类型 的数据格式化为 1(<see langword="true"/>) 或 0(<see langword="false"/>) <br />
+            • <see cref="T:System.Enum"/> 类型 的数据格式化为 <see cref="T:System.Int32"/> 类型 <br />
+            • 其它 类型使用 <see cref="M:System.Object.ToString"/> 转换为此对象的字符串表达形式 <br />
+            </para>
+            </summary>
+            <param name="value">常量表达式</param>
+            <returns>Sql 中的值表达形式</returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ExpressHandler.IsDateTimeDefaultProperty(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            判断属性是否是 <see cref="T:System.DateTime"/> 结构的默认属性
+            </summary>
+            <param name="member">属性表达式</param>
+            <returns></returns>
+        </member>
+        <member name="P:View.Core.Extensions.ExpressionToSqlExtension.DateTimeFormat">
+            <summary>
+            获取或设置 格式化日期时所采用的格式化字符串
+            <para>默认使用 <see cref="P:View.Core.Values.DateTimeValue.NormalDateTimeFormat"/> 格式化</para>
+            </summary>
+        </member>
+        <member name="P:View.Core.Extensions.ExpressionToSqlExtension.HasPriority">
+            <summary>
+            获取或设置 在构造条件时是否确定优先级 ( 即 : 是否使用括号包含不同优先级的表达式 )
+            <para>默认不确定优先级</para>
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.SetConfigurations``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String,System.Boolean)">
+            <summary>
+            设置 解析时采用的配置文本
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="lambda"></param>
+            <param name="dateTimeFormat">格式化日期时所采用的格式化字符串</param>
+            <param name="hasPriority">在构造条件时是否确定优先级</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            将 Lambda 表达式转为 sql 条件
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="lambda"></param>
+            <exception cref="T:System.NotSupportedException"/>
+            <returns>sql 条件表达式</returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.Expression)">
+            <summary>
+            不同类型的表达式 解析
+            </summary>
+            <param name="expression"></param>
+            <exception cref="T:System.NotSupportedException"/>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.LambdaExpression)">
+            <summary>
+            Lambda 表达式 解析
+            </summary>
+            <param name="lambda"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.BinaryExpression)">
+            <summary>
+            二元运算符表达式 解析
+            </summary>
+            <param name="binary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.ConstantExpression)">
+            <summary>
+            常量表达式转为 sql 
+            </summary>
+            <param name="constant"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.UnaryExpression)">
+            <summary>
+            一元运算符表达式 处理
+            </summary>
+            <param name="unary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.MethodCallExpression)">
+            <summary>
+            方法调用表达式 解析
+            </summary>
+            <param name="methodCall"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.ExpressionToSqlExtension.ToSql(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            字段或属性表达式 解析
+            </summary>
+            <param name="member"></param>
+            <returns></returns>
+        </member>
+        <member name="T:View.Core.Extensions.SqlMethods">
+            <summary>
+            表示 Sql 中的一些方法
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.SqlMethods.In``1(``0,System.Collections.Generic.List{``0})">
+            <summary>
+            确定 <paramref name="value"/> 是否在 <paramref name="list"/> 中。
+            <para>in 方法</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">指定的值</param>
+            <param name="list">集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.SqlMethods.NotIn``1(``0,System.Collections.Generic.List{``0})">
+            <summary>
+            确定 <paramref name="value"/> 是否不在 <paramref name="list"/> 中。
+            <para>in 方法</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">指定的值</param>
+            <param name="list">集合</param>
+            <returns></returns>
+        </member>
+        <member name="T:View.Core.Extensions.IEntityExtension">
+            <summary>
+            <see cref="T:View.Core.Interfaces.IEntity"/> 扩展类。
+            </summary>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToByteArrayContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 基于字节数组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToFormUrlEncodedContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 使用 <see langword="application/x-www-form-urlencoded MIME"/>  类型编码的名称/值元组的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToMultipartContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 使用多部分 <see langword="/*"/> 内容类型的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToMultipartFormDataContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 使用 <see langword="multipart/form-data MIME"/>  类型进行编码的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToStreamContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 基于流的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToStringContent(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 基于字符串的 <see cref="T:System.Net.Http.HttpContent"/> 。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:View.Core.Extensions.IEntityExtension.ToQuery(View.Core.Interfaces.IEntity)">
+            <summary>
+            将实体类 <see cref="T:View.Core.Interfaces.IEntity"/> 转换为 查询字符串。
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:View.Core.Extensions.ListExtension">
             <summary>
             List 扩展类
@@ -122,10 +263,13 @@
             <see cref="T:System.Int64"/> 扩展类。
             </summary>
         </member>
-        <member name="M:View.Core.Extensions.LongExtension.ToDateTime(System.Int64)">
+        <member name="M:View.Core.Extensions.LongExtension.ToDateTime(System.Int64,View.Core.Models.UnixTimeStampUnit)">
             <summary> 
-            根据时间戳获取 Utc时间。
+            根据 Unix 时间戳获取 Utc 时间。
             </summary>  
+            <param name="timeStamp">Unix 时间戳</param>
+            <param name="unit">Unix 时间戳单位</param>
+            <returns>Unix 时间戳的 Utc 时间形式</returns>
         </member>
         <member name="T:View.Core.Extensions.StringExtension">
             <summary>
@@ -146,104 +290,10 @@
             <param name="value">指定的字符串</param>
             <returns>如果参数 <paramref name="value"/> 为 <see langword="null"/> ，空字符串("")或仅由空白字符组成，则为 <see langword="true"/>；否则为 <see langword="false"/>。</returns>
         </member>
-        <member name="M:View.Core.Extensions.StringExtension.ToDateTime(System.String)">
-            <summary> 
-            根据时间戳字符串获取 Utc时间。
-            </summary>  
-        </member>
-        <member name="T:View.Core.Models.IEntity">
+        <member name="T:View.Core.Interfaces.IEntity">
             <summary>
             实体类 接口
             </summary>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToByteArrayContent">
-            <summary>
-            将实体转换为 基于字节数组的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToFormUrlEncodedContent">
-            <summary>
-            将实体转换为 使用 <see langword="application/x-www-form-urlencoded MIME"/>  类型编码的名称/值元组的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToMultipartContent">
-            <summary>
-            将实体转换为 使用多部分 <see langword="/*"/> 内容类型的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToMultipartFormDataContent">
-            <summary>
-            将实体转换为 使用 <see langword="multipart/form-data MIME"/>  类型进行编码的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToStreamContent">
-            <summary>
-            将实体转换为 基于流的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToStringContent">
-            <summary>
-            将实体转换为 基于字符串的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.IEntity.ToQuery">
-            <summary>
-            将实体转换为 查询字符串。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:View.Core.Models.Entity">
-            <summary>
-            所有实体类的基类。
-            </summary>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToByteArrayContent">
-            <summary>
-            将实体转换为 基于字节数组的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToFormUrlEncodedContent">
-            <summary>
-            将实体转换为 使用 <see langword="application/x-www-form-urlencoded MIME"/>  类型编码的名称/值元组的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToMultipartContent">
-            <summary>
-            将实体转换为 使用多部分 <see langword="/*"/> 内容类型的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToMultipartFormDataContent">
-            <summary>
-            将实体转换为 使用 <see langword="multipart/form-data MIME"/>  类型进行编码的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToStreamContent">
-            <summary>
-            将实体转换为 基于流的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToStringContent">
-            <summary>
-            将实体转换为 基于字符串的 <see cref="T:System.Net.Http.HttpContent"/> 。
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:View.Core.Models.Entity.ToQuery">
-            <summary>
-            将实体转换为 查询字符串。
-            </summary>
-            <returns></returns>
         </member>
         <member name="T:View.Core.Models.Pagination">
             <summary>
@@ -309,6 +359,21 @@
             结果数据
             </summary>
         </member>
+        <member name="T:View.Core.Models.UnixTimeStampUnit">
+            <summary>
+            Unix 时间戳的单位
+            </summary>
+        </member>
+        <member name="F:View.Core.Models.UnixTimeStampUnit.Seconds">
+            <summary>
+            秒
+            </summary>
+        </member>
+        <member name="F:View.Core.Models.UnixTimeStampUnit.Milliseconds">
+            <summary>
+            毫秒
+            </summary>
+        </member>
         <member name="T:View.Core.Values.DateTimeValue">
             <summary>
             日期的默认值
@@ -323,6 +388,18 @@
             <summary>
             Unix 时间戳 0 的值。
             <para>ISO 8601规范 : 1970-01-01T00:00:00Z</para>
+            </summary>
+        </member>
+        <member name="P:View.Core.Values.DateTimeValue.StandardDateTimeFormat">
+            <summary>
+            标准时间格式化字符串。符合 ISO 8601 标准
+            <para><see langword="yyyy-MM-ddTHH:mm:ss.fffffffK"/></para>
+            </summary>
+        </member>
+        <member name="P:View.Core.Values.DateTimeValue.NormalDateTimeFormat">
+            <summary>
+            通用的时间格式化字符串。
+            <para><see langword="yyyy-MM-dd HH:mm:ss"/></para>
             </summary>
         </member>
     </members>
