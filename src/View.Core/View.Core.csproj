@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Authors>View</Authors>
+		<Description>View 的框架基础。</Description>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageIcon>View.Logo.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/View12138/View.Libraries.git</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>framework</PackageTags>
+		<Version>0.1.0</Version>
+		<PackageReleaseNotes>新增 标记数据库字段自增的 特性类</PackageReleaseNotes>
+		<RootNamespace>View.Core</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\images\View.Logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Attributes\" />
+		<Folder Include="Properties\" />
+	</ItemGroup>
+
+</Project>

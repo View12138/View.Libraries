@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0-windows7.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Authors>View</Authors>
+		<Description>对于 Winform 桌面程序的一些易用性工具库</Description>
+		<Version>0.1.0</Version>
+		<RootNamespace>View.Windows.Forms</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Forms\" />
+	</ItemGroup>
+
+</Project>

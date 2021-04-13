@@ -29,11 +29,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\..\..\View.local.Packages\Icons\View.Logo.png">
+		<None Include="..\..\images\View.Logo.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
-		<None Include="..\LICENSE">
+		<None Include="..\..\LICENSE">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>

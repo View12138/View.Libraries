@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0-windows7.0</TargetFramework>
+		<Version>0.0.1</Version>
+		<Authors>View</Authors>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageIcon>View.Logo.png</PackageIcon>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="Interop.IWshRuntimeLibrary">
+			<HintPath>..\..\libs\Interop.IWshRuntimeLibrary.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\images\View.Logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>

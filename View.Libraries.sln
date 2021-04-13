@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions", "View.Drawing\View.Drawing.Extensions.csproj", "{24A965F1-AE66-4A49-A070-7CBC8C2DA7C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions", "src\View.Drawing\View.Drawing.Extensions.csproj", "{24A965F1-AE66-4A49-A070-7CBC8C2DA7C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Windows.Forms", "View.Windows.Forms\View.Windows.Forms.csproj", "{7C2DA92F-4EC6-4A54-BBF1-722C63E7FB0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Windows.Forms", "src\View.Windows.Forms\View.Windows.Forms.csproj", "{7C2DA92F-4EC6-4A54-BBF1-722C63E7FB0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.Windows.Forms.Controls", "View.Windows.Forms.Controls\View.Windows.Forms.Controls.csproj", "{322766AD-42C8-49FA-8355-B397AFC629AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.Windows.Forms.Controls", "src\View.Windows.Forms.Controls\View.Windows.Forms.Controls.csproj", "{322766AD-42C8-49FA-8355-B397AFC629AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Windows", "View.Windows\View.Windows.csproj", "{E76F407A-91A1-460E-8700-769A016FF011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Windows", "src\View.Windows\View.Windows.csproj", "{E76F407A-91A1-460E-8700-769A016FF011}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Core", "View.Core\View.Core.csproj", "{07D1FD5A-E622-4A3C-8A09-3F0F1194F5BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Core", "src\View.Core\View.Core.csproj", "{07D1FD5A-E622-4A3C-8A09-3F0F1194F5BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3BD0C617-BD2C-4690-B869-CE839B6E4062}"
 EndProject
