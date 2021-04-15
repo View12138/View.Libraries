@@ -1,4 +1,4 @@
-﻿namespace View.Drawing.Papers
+﻿namespace View.Drawing.Extensions.Papers
 {
     /// <summary>
     /// 表示纸张的参数

@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace View.Drawing.Papers
+namespace View.Drawing.Extensions.Papers
 {
     /// <summary>
     /// 表示纸张的尺寸
@@ -12,6 +12,10 @@ namespace View.Drawing.Papers
         /// <see langword="mm"/> 到 <see langword="inch"/> 的转换比例
         /// </summary>
         private readonly decimal mm2inch = 1M / 25.4M;
+        /// <summary>
+        /// inch 到 mm 的换算比例
+        /// </summary>
+        private readonly double inch2mm = 25.4;
 
         /// <summary>
         /// 
@@ -36,7 +40,7 @@ namespace View.Drawing.Papers
         /// <summary>
         /// 获取指定 DPI 对应的像素尺寸。
         /// </summary>
-        /// <param name="dpi">指定的 DPI</param>
+        /// <param name="dpi">指定的 DPI (Dots Per Inch)</param>
         /// <returns></returns>
         public Size GetPixelSize(int dpi) => new Size((int)(Width * mm2inch * dpi), (int)(Height * mm2inch * dpi));
         /// <summary>

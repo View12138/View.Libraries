@@ -33,7 +33,7 @@ namespace View.Windows.Shortcut
             _productName = productName;
             _exeFullPath = exeFullPath;
             _arguments = arguments;
-            _iconFullPath = iconFullPath ?? throw new ArgumentNullException(nameof(iconFullPath));
+            _iconFullPath = iconFullPath;
         }
 
         /// <summary>
@@ -53,6 +53,11 @@ namespace View.Windows.Shortcut
         /// 获取或设置快捷方式图标的完整路径。
         /// </summary>
         public string IconFullPath { get => _iconFullPath; set => _iconFullPath = value; }
+
+        /// <summary>
+        /// 快捷方式描述
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// 在指定位置上创建快捷方式
@@ -97,13 +102,15 @@ namespace View.Windows.Shortcut
         /// <returns></returns>
         public bool RemoveShortcut(ShortcutType type)
         {
-            try
+            bool success = true;
+            foreach (var path in GetLnkPath(type, _productName))
             {
-                File.Delete(GetLnkPath(type, _productName));
-                return true;
+                try
+                { File.Delete(path); }
+                catch
+                { success = false; }
             }
-            catch
-            { return false; }
+            return success;
         }
 
         /// <summary>
@@ -112,12 +119,16 @@ namespace View.Windows.Shortcut
         /// <param name="type">指定类型</param>
         /// <param name="productName">产品名称</param>
         /// <returns></returns>
-        private string GetLnkPath(ShortcutType type, string productName)
+        private List<string> GetLnkPath(ShortcutType type, string productName)
         {
-            if (type == ShortcutType.Desktop)
-            { return $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\{productName}{extension}"; }
-            else
-            { return $@"{Environment.GetFolderPath(Environment.SpecialFolder.Startup)}\{productName}{extension}"; }
+            List<string> path = new List<string>();
+            if ((type & ShortcutType.Desktop) == ShortcutType.Desktop)
+            { path.Add($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\{productName}{extension}"); }
+            if ((type & ShortcutType.Startup) == ShortcutType.Startup)
+            { path.Add($@"{Environment.GetFolderPath(Environment.SpecialFolder.Startup)}\{productName}{extension}"); }
+            if ((type & ShortcutType.StartMenu) == ShortcutType.StartMenu)
+            { path.Add($@"{Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)}\{productName}{extension}"); }
+            return path;
         }
     }
 }
