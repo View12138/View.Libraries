@@ -42,8 +42,8 @@ namespace View.Drawing.Extensions.Test
                 for (int height = 1; height <= 100; height++)
                 {
                     Size oldSize = new Size(width, height);
-                    var destSizeIn = ImageHandle.SizeToSize(oldSize, newSize, SizeMode.ToIn);
-                    var destSizeOut = ImageHandle.SizeToSize(oldSize, newSize, SizeMode.ToOut);
+                    var destSizeIn = ImageHandle.SizeToSize(oldSize, newSize, SizeMode.ToMax);
+                    var destSizeOut = ImageHandle.SizeToSize(oldSize, newSize, SizeMode.ToMin);
                     try
                     {
                         Assert.True(destSizeIn.Width <= newSize.Width);

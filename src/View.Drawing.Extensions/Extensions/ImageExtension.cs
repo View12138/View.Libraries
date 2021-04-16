@@ -18,7 +18,7 @@ namespace View.Drawing.Extensions
     public static class ImageExtension
     {
         /// <summary>
-        /// 按原图宽高比尽可能的将原图高质量的缩放到新的尺寸中。
+        /// 将原图缩放到新的尺寸中。
         /// <para>按照指定的缩放模式(<see cref="ChangeSizeConfiguration.SizeMode"/>) 进行缩放</para>
         /// </summary>
         /// <param name="image"></param>
@@ -53,7 +53,20 @@ namespace View.Drawing.Extensions
                 g.PixelOffsetMode = configuration.PixelOffsetMode;
                 g.TextRenderingHint = configuration.TextRenderingHint;
                 g.Clear(Color.Transparent);
-                g.DrawImage(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(0, 0), image.Size), GraphicsUnit.Pixel);
+                if (configuration.SizeMode == SizeMode.ToMax || configuration.SizeMode == SizeMode.ToMin || configuration.SizeMode == SizeMode.Stretch)
+                { g.DrawImage(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(0, 0), image.Size), GraphicsUnit.Pixel); }
+                if (configuration.SizeMode == SizeMode.Cut)
+                {
+                    Size cutSize = ImageHandle.SizeToSize(newSize, image.Size, SizeMode.ToMax);
+                    int x = configuration.Location.X;
+                    int y = configuration.Location.Y;
+                    if (configuration.ClipInBox)
+                    {
+                        if (x + cutSize.Width > image.Width) { x = image.Width - cutSize.Width; }
+                        if (y + cutSize.Height > image.Height) { y = image.Height - cutSize.Height; }
+                    }
+                    g.DrawImage(image, new Rectangle(new Point(0, 0), newSize), new Rectangle(new Point(x, y), cutSize), GraphicsUnit.Pixel);
+                }
             }
 
             if (!configuration.Reserve) { image.Dispose(); }
@@ -372,20 +385,26 @@ namespace View.Drawing.Extensions
             // scale : 宽高比 ;
             // 宽 = scale × 高 ; 高 = 宽 ÷ scale .
             var scale = oldSize.Width / (oldSize.Height * 1.0);
-            if (mode == SizeMode.ToIn)
+            if (mode == SizeMode.ToMax)
             {
                 if ((int)(scale * newSize.Height) < newSize.Width)
                 { return new Size((int)(scale * newSize.Height), newSize.Height); }
                 else
                 { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
             }
+            else if (mode == SizeMode.ToMin)
+            {
+                if ((int)(scale * newSize.Height) < newSize.Width)
+                { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
+                else
+                { return new Size((int)(scale * newSize.Height), newSize.Height); }
+            }
+            else if (mode == SizeMode.Stretch)
+            { return newSize; }
+            else if (mode == SizeMode.Cut)
+            { return newSize; }
             else
-            {
-                if ((int)(scale * newSize.Height) < newSize.Width)
-                { return new Size(newSize.Width, (int)(newSize.Width / scale)); }
-                else
-                { return new Size((int)(scale * newSize.Height), newSize.Height); }
-            }
+            { throw new ArgumentException($"{nameof(mode)} 不是指定的值"); }
         }
 
         /// <summary>

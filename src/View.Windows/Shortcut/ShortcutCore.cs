@@ -64,36 +64,36 @@ namespace View.Windows.Shortcut
         /// </summary>
         /// <param name="type">指定类型</param>
         /// <returns>成功或失败</returns>
-        public bool CreateShortcut(ShortcutType type)
-        {
-            if (Exists(type))
-            { return true; }
-            try
-            {
-                WshShell shell = new WshShell();
-                //快捷键方式创建的位置、名称
-                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(GetLnkPath(type, _productName));
-                shortcut.TargetPath = _exeFullPath; //目标文件
-                                                    //该属性指定应用程序的工作目录，当用户没有指定一个具体的目录时，快捷方式的目标应用程序将使用该属性所指定的目录来装载或保存文件。
-                shortcut.WorkingDirectory = Path.GetDirectoryName(_exeFullPath);
-                shortcut.WindowStyle = 1; //目标应用程序的窗口状态分为普通、最大化、最小化【1,3,7】
-                shortcut.Description = _productName; //描述
-                shortcut.IconLocation = string.IsNullOrWhiteSpace(IconFullPath) ? _exeFullPath : IconFullPath;  //快捷方式图标
-                shortcut.Arguments = _arguments;
-                //shortcut.Hotkey = "CTRL+ALT+F11"; // 快捷键
-                shortcut.Save(); //必须调用保存快捷才成创建成功
-                return true;
-            }
-            catch
-            { return false; }
-        }
+        //public bool CreateShortcut(ShortcutType type)
+        //{
+        //    if (Exists(type))
+        //    { return true; }
+        //    try
+        //    {
+        //        WshShell shell = new WshShell();
+        //        //快捷键方式创建的位置、名称
+        //        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(GetLnkPath(type, _productName));
+        //        shortcut.TargetPath = _exeFullPath; //目标文件
+        //                                            //该属性指定应用程序的工作目录，当用户没有指定一个具体的目录时，快捷方式的目标应用程序将使用该属性所指定的目录来装载或保存文件。
+        //        shortcut.WorkingDirectory = Path.GetDirectoryName(_exeFullPath);
+        //        shortcut.WindowStyle = 1; //目标应用程序的窗口状态分为普通、最大化、最小化【1,3,7】
+        //        shortcut.Description = _productName; //描述
+        //        shortcut.IconLocation = string.IsNullOrWhiteSpace(IconFullPath) ? _exeFullPath : IconFullPath;  //快捷方式图标
+        //        shortcut.Arguments = _arguments;
+        //        //shortcut.Hotkey = "CTRL+ALT+F11"; // 快捷键
+        //        shortcut.Save(); //必须调用保存快捷才成创建成功
+        //        return true;
+        //    }
+        //    catch
+        //    { return false; }
+        //}
 
         /// <summary>
         /// 获取一个值，指示是否已经存在指定类型的快捷方式。
         /// </summary>
         /// <param name="type">指定类型</param>
         /// <returns></returns>
-        public bool Exists(ShortcutType type) => File.Exists(GetLnkPath(type, _productName));
+        //public bool Exists(ShortcutType type) => File.Exists(GetLnkPath(type, _productName));
 
         /// <summary>
         /// 移除指定类型的快捷方式

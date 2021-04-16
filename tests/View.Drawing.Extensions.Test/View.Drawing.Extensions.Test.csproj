@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\View.Drawing\View.Drawing.Extensions.csproj" />
+		<ProjectReference Include="..\..\src\View.Drawing.Extensions\View.Drawing.Extensions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions", "src\View.Drawing\View.Drawing.Extensions.csproj", "{24A965F1-AE66-4A49-A070-7CBC8C2DA7C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions", "src\View.Drawing.Extensions\View.Drawing.Extensions.csproj", "{24A965F1-AE66-4A49-A070-7CBC8C2DA7C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Windows.Forms", "src\View.Windows.Forms\View.Windows.Forms.csproj", "{7C2DA92F-4EC6-4A54-BBF1-722C63E7FB0D}"
 EndProject
