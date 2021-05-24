@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace View.Drawing.Extensions.Papers
+namespace View.Drawing.Papers
 {
     /// <summary>
     /// 表示纸张的尺寸
