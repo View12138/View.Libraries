@@ -2,24 +2,25 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Authors>View</Authors>
-		<Description>View 的框架基础。</Description>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<PackageIcon>View.Logo.png</PackageIcon>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>https://github.com/View12138/View.Libraries.git</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/View12138/View.Libraries.git</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>framework</PackageTags>
-		<Version>0.1.0</Version>
-		<PackageReleaseNotes>新增 标记数据库字段自增的 特性类</PackageReleaseNotes>
-		<RootNamespace>View.Core</RootNamespace>
+		<Version>0.2.0</Version>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>$(OutputPath)$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<DocumentationFile>bin\$(Configuration)\$(TargetName).xml</DocumentationFile>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageVersion>0.2.0</PackageVersion>
+		<Authors>View</Authors>
+		<Description>View 的框架基础。</Description>
+		<PackageTags>framework,base,common,util</PackageTags>
+		<PackageIcon>View.Logo.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/View12138/View.Libraries/tree/master/src/View.Core</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/View12138/View.Libraries/tree/master/src/View.Core</PackageProjectUrl>
+		<NeutralLanguage>zh</NeutralLanguage>
+		<Copyright>Copyright 2021</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -31,11 +32,6 @@
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Attributes\" />
-		<Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>

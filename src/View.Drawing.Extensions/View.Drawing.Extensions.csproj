@@ -2,35 +2,27 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net45;net5.0;</TargetFrameworks>
-		<Version>0.1.7</Version>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<PackageVersion>0.1.7</PackageVersion>
-		<Authors>View</Authors>
-		<Description>使用 GDI+ 对图像的操作的扩展库。目前主要是改变图像尺寸和改变图像的质量。</Description>
-		<PackageIcon>View.Logo.png</PackageIcon>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/View12138/View.Libraries/tree/master/View.Drawing.Extension</RepositoryUrl>
-		<Copyright>Copyright 2020</Copyright>
-		<NeutralLanguage>zh</NeutralLanguage>
-		<PackageLicenseExpression></PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/View12138/View.Libraries</PackageProjectUrl>
-		<AssemblyName>View.Drawing.Extension</AssemblyName>
-		<RootNamespace>View.Drawing.Extension</RootNamespace>
-		<PackageTags>GDI+,bitmap,change image size</PackageTags>
-	</PropertyGroup>
-
-	<PropertyGroup>
+		<Version>0.2.0</Version>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+		<DocumentationFile>$(OutputPath)$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	</PropertyGroup>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageVersion>0.2.0</PackageVersion>
+		<Authors>View</Authors>
+		<Description>使用 GDI+ 对图像的操作的扩展库。目前主要是改变图像尺寸和改变图像的质量。</Description>
+		<PackageTags>GDI+,bitmap,change image size</PackageTags>
+		<PackageIcon>View.Logo.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/View12138/View.Libraries/tree/master/View.Drawing.Extensions</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/View12138/View.Libraries/tree/master/View.Drawing.Extensions</PackageProjectUrl>
+		<NeutralLanguage>zh</NeutralLanguage>
+		<Copyright>Copyright 2021</Copyright>
+	
+</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\..\images\View.Logo.png">

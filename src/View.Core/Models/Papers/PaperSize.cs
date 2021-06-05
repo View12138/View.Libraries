@@ -1,6 +1,6 @@
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace View.Drawing.Papers
+namespace View.Core.Models.Papers
 {
     /// <summary>
     /// 表示纸张的尺寸
@@ -42,11 +42,18 @@ namespace View.Drawing.Papers
         /// </summary>
         /// <param name="dpi">指定的 DPI (Dots Per Inch)</param>
         /// <returns></returns>
-        public Size GetPixelSize(int dpi) => new Size((int)(Width * mm2inch * dpi), (int)(Height * mm2inch * dpi));
+        public Size GetPixelSize(int dpi)
+        {
+            return new Size((int)(Width * mm2inch * dpi), (int)(Height * mm2inch * dpi));
+        }
+
         /// <summary>
         /// 获取 DPI=300 时的像素尺寸。
         /// </summary>
         /// <returns></returns>
-        public Size GetPixelSize() => GetPixelSize(300);
+        public Size GetPixelSize()
+        {
+            return GetPixelSize(300);
+        }
     }
 }

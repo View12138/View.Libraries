@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace View.Core.Values
+namespace View.Core.StaticValues
 {
     /// <summary>
     /// 日期的默认值
@@ -19,12 +19,12 @@ namespace View.Core.Values
         /// 标准时间格式化字符串。符合 ISO 8601 标准
         /// <para><see langword="yyyy-MM-ddTHH:mm:ss.fffffffK"/></para>
         /// </summary>
-        public static string StandardDateTimeFormat => "O";
+        public static string StandardFormat => "O";
         
         /// <summary>
         /// 通用的时间格式化字符串。
         /// <para><see langword="yyyy-MM-dd HH:mm:ss"/></para>
         /// </summary>
-        public static string NormalDateTimeFormat => "yyyy-MM-dd HH:mm:ss";
+        public static string NormalFormat => "yyyy-MM-dd HH:mm:ss";
     }
 }

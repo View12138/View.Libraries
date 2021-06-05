@@ -9,12 +9,13 @@ namespace View.Core.Extensions
     /// <summary>
     /// Lambda 表达式扩展
     /// </summary>
+    [Obsolete]
     public static class ExpressionToSqlExtension
     {
         /// <summary>
         /// 内部处理方法
         /// </summary>
-        static class ExpressHandler
+        private static class ExpressHandler
         {
             /// <summary>
             /// 运算符 解析
@@ -107,9 +108,9 @@ namespace View.Core.Extensions
 
         /// <summary>
         /// 获取或设置 格式化日期时所采用的格式化字符串
-        /// <para>默认使用 <see cref="Core.Values.DateTimeValue.NormalDateTimeFormat"/> 格式化</para>
+        /// <para>默认使用 <see cref="Core.StaticValues.DateTimeValue.NormalFormat"/> 格式化</para>
         /// </summary>
-        public static string DateTimeFormat { get; set; } = Values.DateTimeValue.NormalDateTimeFormat;
+        public static string DateTimeFormat { get; set; } = StaticValues.DateTimeValue.NormalFormat;
 
         /// <summary>
         /// 获取或设置 在构造条件时是否确定优先级 ( 即 : 是否使用括号包含不同优先级的表达式 )
@@ -207,7 +208,7 @@ namespace View.Core.Extensions
             string left = binary.Left.ToSql();
             string @operator = ExpressHandler.ToSql(binary.NodeType);
             string right = binary.Right.ToSql();
-            if (binary.Left.Type == typeof(bool) && 
+            if (binary.Left.Type == typeof(bool) &&
                 binary.Right.Type == typeof(bool) &&
                 binary.NodeType == ExpressionType.Equal) // 解析 Boolean 类型和 Boolean 常量比较
             { left = left.Substring(0, left.Length - 1 - 2); }
@@ -378,6 +379,7 @@ namespace View.Core.Extensions
     /// <summary>
     /// 表示 Sql 中的一些方法
     /// </summary>
+    [Obsolete]
     public static class SqlMethods
     {
         /// <summary>

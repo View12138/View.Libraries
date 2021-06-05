@@ -5,7 +5,7 @@ using System.Reflection;
 namespace View.Core.Extensions
 {
     /// <summary>
-    /// 枚举扩展
+    /// <see cref="Enum"/> 扩展。
     /// </summary>
     public static class EnumExtension
     {
@@ -13,31 +13,29 @@ namespace View.Core.Extensions
         /// 移除位域枚举中指定的值
         /// </summary>
         /// <typeparam name="TEnum"></typeparam>
-        /// <param name="enum"></param>
-        /// <param name="_enum"></param>
+        /// <param name="flag"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static TEnum Remove<TEnum>(this Enum @enum, TEnum _enum) where TEnum : Enum
+        public static TEnum Remove<TEnum>(this Enum flag, TEnum value) where TEnum : Enum
         {
-            if (!typeof(TEnum).IsEnum) { throw new ArgumentException("TEnum must be an enumerated type."); }
+            int _flag = Convert.ToInt32(flag);
+            int _value = Convert.ToInt32(value);
 
-            int value = Convert.ToInt32(@enum);
-            int _value = Convert.ToInt32(_enum);
-
-            return (TEnum)Enum.ToObject(typeof(TEnum), value & (~_value));
+            return (TEnum)Enum.ToObject(typeof(TEnum), _flag & (~_value));
 
         }
 
         /// <summary>
         /// 获取枚举类型的描述。
         /// </summary>
-        /// <param name="enum"></param>
+        /// <param name="value"></param>
         /// <returns>枚举描述信息</returns>
-        public static string ToDescription(this Enum @enum)
+        public static string ToDescription(this Enum value)
         {
-            Type type = @enum.GetType();
-            FieldInfo field = type.GetField(Enum.GetName(type, @enum));
-            var description = field.GetCustomAttribute<DescriptionAttribute>(true);
-            return description?.Description;
+            Type type = value.GetType();
+            FieldInfo field = type.GetField(Enum.GetName(type, value));
+            DescriptionAttribute description = field.GetCustomAttribute<DescriptionAttribute>(true);
+            return description?.Description ?? "";
         }
     }
 }
