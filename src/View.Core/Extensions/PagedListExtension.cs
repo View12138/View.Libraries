@@ -34,33 +34,8 @@ namespace View.Core.Extensions
         /// <exception cref="ArgumentNullException">source 为 null。</exception>
         public static IPagedList<TSource> ToPagedList<TSource>(this IPagedQueryable<TSource> source)
         {
-            return new InnerPagedList<TSource>(source.ToList(), source.Index, source.Size, source.Count);
+            return new PagedList<TSource>(source.ToList(), source.Index, source.Size, source.Count);
         }
-
-
-        #region Private Inner Class
-        /// <summary>
-        /// 表示可通过索引访问的对象的强类型列表。 提供用于对列表进行搜索、排序和操作的方法。并包含分页信息。
-        /// </summary>
-        /// <typeparam name="T">列表中元素的类型。</typeparam>
-        private class InnerPagedList<T> : List<T>, IPagedList<T>
-        {
-            internal InnerPagedList(IEnumerable<T> data, int index, int size, long count)
-                : base(data)
-            {
-                Index = index;
-                Size = size;
-                Count = count;
-            }
-            public int Index { get; }
-            public int Size { get; }
-            public new long Count { get; }
-            public long Pages => (Count + Size - 1) / Size;
-            public long CurrentCount => base.Count;
-            public bool HasPrevious => Index > 0;
-            public bool HasNext => Index + 1 < Pages;
-        }
-        #endregion
     }
 
 }

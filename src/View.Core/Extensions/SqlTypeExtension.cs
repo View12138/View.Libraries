@@ -1,4 +1,5 @@
 ﻿using System;
+using View.Core.Interfaces;
 using View.Core.Models.Sql;
 
 namespace View.Core.Extensions
@@ -10,57 +11,82 @@ namespace View.Core.Extensions
     {
         /// <summary>
         /// <see langword="SQL"/> 通用数据类型转 <see langword="C#"/> 数据类型。
+        /// <para>使用默认的类型转换器</para>
         /// </summary>
         /// <param name="type"><see langword="SQL"/> 通用数据类型</param>
         /// <returns><see langword="C#"/> 数据类型</returns>
         public static Type ToType(this SqlType type)
         {
-            switch (type)
+            return new DefaultSqlTypeConverter().ConvertTo(type);
+        }
+
+        /// <summary>
+        /// <see langword="SQL"/> 通用数据类型转 <see langword="C#"/> 数据类型。
+        /// </summary>
+        /// <param name="type"><see langword="SQL"/> 通用数据类型</param>
+        /// <param name="converter">类型转换器</param>
+        /// <returns><see langword="C#"/> 数据类型</returns>
+        public static Type ToType(this SqlType type, ISqlTypeConverter converter)
+        {
+            if (converter is null)
+            { throw new ArgumentNullException(nameof(converter)); }
+
+            return converter.ConvertTo(type) ?? new DefaultSqlTypeConverter().ConvertTo(type);
+        }
+
+        #region Inner Class
+        class DefaultSqlTypeConverter : ISqlTypeConverter
+        {
+            public Type ConvertTo(SqlType sqlType)
             {
-                case SqlType.SmallInt: return typeof(short);
-                case SqlType.MediumInt:
-                case SqlType.Integer:
-                case SqlType.Year:
-                case SqlType.Int: return typeof(int);
-                case SqlType.BigInt: return typeof(long);
-                case SqlType.Real: return typeof(float);
-                case SqlType.Double:
-                case SqlType.Precision:
-                case SqlType.Float: return typeof(double);
-                case SqlType.Dec:
-                case SqlType.Decimal:
-                case SqlType.Money:
-                case SqlType.Numeric:
-                case SqlType.Fixed:
-                case SqlType.SmallMoney: return typeof(decimal);
-                case SqlType.Binary:
-                case SqlType.Image:
-                case SqlType.Blob:
-                case SqlType.MediumBlob:
-                case SqlType.TinyBlob:
-                case SqlType.LongText:
-                case SqlType.VarBinary: return typeof(byte[]);
-                case SqlType.TinyInt: return typeof(byte);
-                case SqlType.Bool:
-                case SqlType.Boolean:
-                case SqlType.Bit: return typeof(bool);
-                case SqlType.Date:
-                case SqlType.Time:
-                case SqlType.DateTime:
-                case SqlType.SmallDateTime: return typeof(DateTime);
-                case SqlType.TimeStamp: return typeof(uint);
-                case SqlType.UniqueIdentifier: return typeof(Guid);
-                case SqlType.Variant: return typeof(object);
-                case SqlType.Text:
-                case SqlType.Char:
-                case SqlType.NChar:
-                case SqlType.NText:
-                case SqlType.NVarChar:
-                case SqlType.VarChar:
-                case SqlType.TinyText:
-                case SqlType.MediumText:
-                default: return typeof(string);
+                switch (sqlType)
+                {
+                    case SqlType.SmallInt: return typeof(short);
+                    case SqlType.MediumInt:
+                    case SqlType.Integer:
+                    case SqlType.Year:
+                    case SqlType.Int: return typeof(int);
+                    case SqlType.BigInt: return typeof(long);
+                    case SqlType.Real: return typeof(float);
+                    case SqlType.Double:
+                    case SqlType.Precision:
+                    case SqlType.Float: return typeof(double);
+                    case SqlType.Dec:
+                    case SqlType.Decimal:
+                    case SqlType.Money:
+                    case SqlType.Numeric:
+                    case SqlType.Fixed:
+                    case SqlType.SmallMoney: return typeof(decimal);
+                    case SqlType.Binary:
+                    case SqlType.Image:
+                    case SqlType.Blob:
+                    case SqlType.MediumBlob:
+                    case SqlType.TinyBlob:
+                    case SqlType.LongText:
+                    case SqlType.VarBinary: return typeof(byte[]);
+                    case SqlType.TinyInt: return typeof(byte);
+                    case SqlType.Bool:
+                    case SqlType.Boolean:
+                    case SqlType.Bit: return typeof(bool);
+                    case SqlType.Date:
+                    case SqlType.Time:
+                    case SqlType.DateTime:
+                    case SqlType.SmallDateTime: return typeof(DateTime);
+                    case SqlType.TimeStamp: return typeof(uint);
+                    case SqlType.UniqueIdentifier: return typeof(Guid);
+                    case SqlType.Variant: return typeof(object);
+                    case SqlType.Text:
+                    case SqlType.Char:
+                    case SqlType.NChar:
+                    case SqlType.NText:
+                    case SqlType.NVarChar:
+                    case SqlType.VarChar:
+                    case SqlType.TinyText:
+                    case SqlType.MediumText:
+                    default: return typeof(string);
+                }
             }
         }
+        #endregion
     }
 }

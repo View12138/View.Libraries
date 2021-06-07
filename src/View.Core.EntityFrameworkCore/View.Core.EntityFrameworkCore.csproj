@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Version>0.2.0</Version>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>$(OutputPath)$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageVersion>0.2.0</PackageVersion>
+		<Authors>View</Authors>
+		<Description>View 的框架基础。</Description>
+		<PackageTags>entityframework,paged</PackageTags>
+		<PackageIcon>View.Logo.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/View12138/View.Libraries/tree/master/src/View.Core.EntityFrameworkCore</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/View12138/View.Libraries/tree/master/src/View.Core.EntityFrameworkCore</PackageProjectUrl>
+		<NeutralLanguage>zh</NeutralLanguage>
+		<Copyright>Copyright 2021</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\images\View.Logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\View.Core\View.Core.csproj" />
+	</ItemGroup>
+
+</Project>
