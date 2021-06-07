@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using View.Core;
 using View.Core.Extensions;
 using View.Core.Models.Paging;
@@ -16,7 +17,12 @@ namespace View.Core.Test
         {
             List<int> nums = new() { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21 };
             IQueryable<int> query = nums.AsQueryable();
-            IPagedQueryable<int> pageQuery = query.AsPagedQueryable(new PagedQueryInfo(2, 3));
+            IPagedQueryable<int> pageQuery = query.AsPagedQueryable(2, 3);
+            var hashCode = pageQuery.GetHashCode();
+            pageQuery = query.AsPagedQueryable(2, 3);
+            hashCode = pageQuery.GetHashCode();
+            pageQuery = pageQuery.AsPagedQueryable(2, 3);
+            hashCode = pageQuery.GetHashCode();
             IPagedList<int> pagedList = pageQuery.ToPagedList();
             IPagedResult<int> pagedResult = pagedList.ToPagedResult();
 

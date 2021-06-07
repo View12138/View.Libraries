@@ -15,12 +15,14 @@ namespace View.Core.Extensions
         /// </summary>
         /// <typeparam name="TSource">source 的元素类型。</typeparam>
         /// <param name="source">要从其创建 <see cref="InnerPagedList{T}"/> 的 <see cref="IEnumerable{T}"/>。</param>
-        /// <param name="queryInfo">分页查询信息</param>
+        /// <param name="index">当前页</param>
+        /// <param name="size">每页数据量</param>
+        /// <param name="count">总数据量</param>
         /// <returns>一个包含输入序列中的元素的 <see cref="InnerPagedList{T}"/>。</returns>
         /// <exception cref="ArgumentNullException">source 为 null。</exception>
-        public static IPagedList<TSource> ToPagedList<TSource>(this IEnumerable<TSource> source, PagedQueryInfo queryInfo)
+        public static IPagedList<TSource> ToPagedList<TSource>(this IEnumerable<TSource> source, int index, int size, long count = 0)
         {
-            return source.AsPagedQueryable(queryInfo).ToPagedList();
+            return source.AsPagedQueryable(index, size, count).ToPagedList();
         }
 
         /// <summary>

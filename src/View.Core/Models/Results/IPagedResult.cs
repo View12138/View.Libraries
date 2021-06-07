@@ -12,12 +12,12 @@ namespace View.Core.Models.Results
         /// <summary>
         /// 响应分页信息
         /// </summary>
-        public IPagedInfo PagedInfo { get; }
+        IPagedInfo PagedInfo { get; }
 
         /// <summary>
         /// 响应列表数据数据。
         /// </summary>
-        public IEnumerable<T> Data { get; }
+        IEnumerable<T> Data { get; }
 
         /// <summary>
         /// 响应状态。

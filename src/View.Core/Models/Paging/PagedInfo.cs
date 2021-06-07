@@ -8,27 +8,27 @@
         /// <summary>
         /// 当前页码
         /// </summary>
-        public int Index { get; }
+        int Index { get; }
         /// <summary>
         /// 每页行数
         /// </summary>
-        public int Size { get; }
+        int Size { get; }
         /// <summary>
         /// 总行数
         /// </summary>
-        public long Count { get; }
+        long Count { get; }
         /// <summary>
         /// 总页数
         /// </summary>
-        public long Pages { get; }
+        long Pages { get; }
         /// <summary>
         /// 是否有上一页
         /// </summary>
-        public bool HasPrevious { get; }
+        bool HasPrevious { get; }
         /// <summary>
         /// 是否有下一页
         /// </summary>
-        public bool HasNext { get; }
+        bool HasNext { get; }
     }
 
 }

@@ -20,11 +20,11 @@ namespace View.Core.Models.Paging
         /// <summary>
         /// 总行数
         /// </summary>
-        public new long Count { get; }
+        new long Count { get; }
         /// <summary>
         /// 获取当前 <see cref="IPagedList{T}"/> 中包含的行数。
         /// </summary>
-        public long CurrentCount { get; }
+        long CurrentCount { get; }
     }
 
 }
