@@ -7,21 +7,24 @@ namespace View.AutoTask.Core
         public static readonly TimeSpan Start = TimeSpan.Zero;
         public static readonly TimeSpan Stop = new(0, 23, 59, 59, 999);
 
-        public static (TimeSpan Start, TimeSpan Stop) ToTime(this string time)
+        public static void ToTime(this string time, out TimeSpan start, out TimeSpan stop)
         {
             try
             {
-                var times = time.Split("-");
-                var start = TimeSpan.Parse(times[0]);
-                var end = TimeSpan.Parse(times[1]);
-                if (start.TotalMilliseconds > 86399999 || end.TotalMilliseconds > 86399999)
+                var times = time.Split('-');
+                start = TimeSpan.Parse(times[0]);
+                stop = TimeSpan.Parse(times[1]);
+                if (start.TotalMilliseconds > 86399999 || stop.TotalMilliseconds > 86399999)
                 { throw new ArgumentOutOfRangeException(nameof(time), "起止时间不能超过24小时(86399999 毫秒)"); }
-                if (start >= end)
+                if (start >= stop)
                 { throw new ArgumentOutOfRangeException(nameof(time), "结束时间不能小于开始时间"); }
-
-                return (start, end);
             }
-            catch (Exception ex) when (ex is IndexOutOfRangeException or ArgumentOutOfRangeException or ArgumentNullException or FormatException or OverflowException)
+            catch (Exception ex)
+            when (ex is IndexOutOfRangeException ||
+                  ex is ArgumentOutOfRangeException ||
+                  ex is ArgumentNullException ||
+                  ex is FormatException ||
+                  ex is OverflowException)
             {
                 throw new ApplicationException($"时间格式错误：{time}。", ex);
             }

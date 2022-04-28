@@ -1,4 +1,7 @@
-﻿namespace View.AutoTask.Options
+﻿using View.AutoTask.Caches;
+using View.AutoTask.Core;
+
+namespace View.AutoTask.Options
 {
     /// <summary>
     /// 任务选项
@@ -12,7 +15,7 @@
         /// <item>使用内存缓存的效果与不使用缓存相同</item>
         /// </list>
         /// </summary>
-        public IMetadataCache Cache { get; set; } = IMetadataCache.DefaultFileCache;
+        public IMetadataCache Cache { get; set; } = new DefaultFileMetadataCache();
 
         /// <summary>
         /// 获取或设置缓存写入的格式。

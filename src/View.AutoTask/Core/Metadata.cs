@@ -10,7 +10,7 @@ namespace View.AutoTask.Core
     /// </summary>
     internal class Metadata : IEquatable<Metadata>
     {
-        private static readonly string split = ".";
+        private static readonly char split = '.';
 
         public Metadata(MethodInfo methodInfo) : this(methodInfo.Module.MetadataToken, methodInfo.MetadataToken) { }
         public Metadata(MethodInfo methodInfo, long excuteTime) : this(methodInfo.Module.MetadataToken, methodInfo.MetadataToken, excuteTime) { }
@@ -75,7 +75,10 @@ namespace View.AutoTask.Core
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ModuleToken, MethodToken);
+            int hashCode = -1236719201;
+            hashCode = hashCode * -1521134295 + ModuleToken.GetHashCode();
+            hashCode = hashCode * -1521134295 + MethodToken.GetHashCode();
+            return hashCode;
         }
     }
 }

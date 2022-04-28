@@ -12,15 +12,13 @@ namespace View.AutoTask.Test
 
             TaskInitializer.Start(new TaskOptions()
             {
-                Cache = IMetadataCache.DefaultFileCache,
-                CacheType = CacheType.Binary,
+                Cache = new Caches.DefaultFileMetadataCache(),
+                CacheType = CacheType.Text,
                 TaskScope = TaskScope.Assembly
             });
 
             Console.ReadKey();
         }
-
-
 
         [TaskMethod(10, Units.Second, OnStartup = true)]
         public static void TaskTest0()
@@ -51,10 +49,16 @@ namespace View.AutoTask.Test
             Console.WriteLine($"TaskTest3 Runing. {DateTime.Now:yy-MM-dd HH:mm:ss}");
         }
 
-        [TaskMethod(1, Units.Minute, OnStartup = false)]
+        [TaskMethod(1, Units.Minute)]
         public static void TaskTest4()
         {
             Console.WriteLine($"TaskTest4 Runing. {DateTime.Now:yy-MM-dd HH:mm:ss}");
+        }
+
+        [TaskMethod(1, Units.Hour)]
+        public static void TaskTest5()
+        {
+            Console.WriteLine($"TaskTest5 Runing. {DateTime.Now:yy-MM-dd HH:mm:ss}");
         }
     }
 }

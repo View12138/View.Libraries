@@ -12,10 +12,10 @@ namespace View.AutoTask
     /// <para></para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public sealed class TaskMethodAttribute : Attribute, IEquatable<TaskMethodAttribute>
+    public sealed class TaskMethodAttribute : Attribute
     {
-        private readonly TimeSpan start = TaskExtensions.Start;
-        private readonly TimeSpan stop = TaskExtensions.Stop;
+        private TimeSpan start = TaskExtensions.Start;
+        private TimeSpan stop = TaskExtensions.Stop;
         private readonly long interval;
         private long lastUnixTime;
 
@@ -68,70 +68,18 @@ namespace View.AutoTask
         /// 当程序启动时是否立即运行一次
         /// <para>默认 : <see langword="false"/></para>
         /// </summary>
-        public bool OnStartup { get; init; } = false;
+        public bool OnStartup { get; set; } = false;
 
         /// <summary>
         /// 任务运行的时间段
         /// <para>默认值 "<c>00:00:00.000-23:59:59.999</c>" </para>
         /// </summary>
-        public string RunSpan { get => $"{start:HH:mm:dd.zzz}-{stop:HH:mm:dd.zzz}"; init { (start, stop) = value.ToTime(); } }
+        public string RunSpan { get => $"{start:HH:mm:dd.zzz}-{stop:HH:mm:dd.zzz}"; set => value.ToTime(out start, out stop); }
 
         /// <summary>
         /// 任务失败时重试次数
         /// </summary>
         public uint Retry { get; set; } = 3;
-
-        #region HashCode & IEquatable
-
-        /// <summary>
-        /// Returns a value that indicates whether this instance is equal to a specified object.
-        /// </summary>
-        /// <param name="obj">An <see cref="System.Object"/> to compare with this instance or null.</param>
-        /// <returns>true if obj and this instance are of the same type and have identical field values; otherwise, false.</returns>
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as TaskMethodAttribute);
-        }
-
-        /// <summary>
-        /// Returns a value that indicates whether this instance is equal to a specified object.
-        /// </summary>
-        /// <param name="other">An <see cref="TaskMethodAttribute"/> to compare with this instance or null.</param>
-        /// <returns>true if obj and this instance are of the same type and have identical field values; otherwise, false.</returns>
-        public bool Equals(TaskMethodAttribute other)
-        {
-            return other != null &&
-                               base.Equals(other) &&
-                               EqualityComparer<object>.Default.Equals(TypeId, other.TypeId) &&
-                               start.Equals(other.start) &&
-                               stop.Equals(other.stop) &&
-                               interval == other.interval &&
-                               lastUnixTime == other.lastUnixTime &&
-                               TaskName == other.TaskName &&
-                               OnStartup == other.OnStartup &&
-                               RunSpan == other.RunSpan;
-        }
-
-        /// <summary>
-        /// Returns the hash code for this instance.
-        /// </summary>
-        /// <returns>A 32-bit signed integer hash code.</returns>
-        public override int GetHashCode()
-        {
-            HashCode hash = new HashCode();
-            hash.Add(base.GetHashCode());
-            hash.Add(TypeId);
-            hash.Add(start);
-            hash.Add(stop);
-            hash.Add(interval);
-            hash.Add(lastUnixTime);
-            hash.Add(TaskName);
-            hash.Add(OnStartup);
-            hash.Add(RunSpan);
-            return hash.ToHashCode();
-        }
-
-        #endregion
 
     }
 }

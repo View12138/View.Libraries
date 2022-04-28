@@ -41,7 +41,7 @@ namespace View.AutoTask.Core
                 byte[] byteMetadatas = cache.Read();
                 if (byteMetadatas != null && byteMetadatas.Length != 0)
                 {
-                    var stringMetadatas = Encoding.UTF8.GetString(byteMetadatas).Split(split, StringSplitOptions.RemoveEmptyEntries);
+                    var stringMetadatas = Encoding.UTF8.GetString(byteMetadatas).Split(new string[] { split }, StringSplitOptions.RemoveEmptyEntries);
                     if (stringMetadatas != null && stringMetadatas.Length != 0)
                     {
                         foreach (var stringMetadata in stringMetadatas)
@@ -53,6 +53,7 @@ namespace View.AutoTask.Core
             }
             else if (Options.CacheType == CacheType.Binary)
             {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
                 var byteMetadatas = cache.Read().AsSpan();
                 for (int i = 0; i < byteMetadatas.Length; i += 16)
                 {
@@ -62,10 +63,23 @@ namespace View.AutoTask.Core
                     bytes.AddRange(byteMetadatas.Slice(i + 8, 8).ToArray());
                     metadatas.Add(Metadata.Parse(bytes.ToArray()));
                 }
+#else
+                var byteMetadatas = cache.Read();
+                for (int i = 0; i < byteMetadatas.Length; i += 16)
+                {
+                    List<byte> bytes = new List<byte>();
+                    for (int j = 0; j < 16; j++)
+                    {
+                        bytes.Add(byteMetadatas[j]);
+                    }
+                    metadatas.Add(Metadata.Parse(bytes.ToArray()));
+                }
+#endif
             }
             return metadatas;
         }
 
         public static void ClrarMetadatas(this IMetadataCache cache) => cache.Clear();
+
     }
 }

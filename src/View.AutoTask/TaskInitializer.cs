@@ -8,16 +8,36 @@ using System.Threading.Tasks;
 using System.Timers;
 using View.AutoTask.Core;
 using View.AutoTask.Options;
+using View.AutoTask.Caches;
 
 namespace View.AutoTask
 {
     public static partial class TaskInitializer
     {
-        private record Tasks(MethodInfo Task, TaskMethodAttribute Info);
+        private struct Tasks
+        {
+            public Tasks(MethodInfo task, TaskMethodAttribute info)
+            {
+                Task = task;
+                Info = info;
+            }
 
-        private static readonly List<Tasks> tasks = new();
-        private static readonly Timer timer = new(400);
-        private static HashSet<Metadata> metadatas = new();
+            public MethodInfo Task { get; private set; }
+            public TaskMethodAttribute Info { get; private set; }
+        };
+
+        private static readonly List<Tasks> tasks = new List<Tasks>();
+        private static readonly Timer timer = new Timer(400);
+        private static HashSet<Metadata> metadatas = new HashSet<Metadata>();
+
+        public static TaskOptions Options
+        {
+            get => Default.Options; set
+            {
+                Default.Options = value ?? new TaskOptions();
+                Default.Options.Cache = Default.Options.Cache ?? new DefaultMemonyMetadataCache();
+            }
+        }
 
         /// <summary>
         /// 扫描并启动任务
@@ -25,12 +45,8 @@ namespace View.AutoTask
         /// <param name="options"></param>
         public static void Start(TaskOptions options = null)
         {
-            Default.Options = options ?? new TaskOptions();
-            Default.Options.Cache ??= IMetadataCache.DefaultMemonyCache;
-            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
-            {
-                Default.Options.Cache.WriteMetadatas(metadatas);
-            };
+            Options = options;
+            AppDomain.CurrentDomain.ProcessExit += (s, e) => Default.Options.Cache.WriteMetadatas(metadatas);
             InitializationTask();
         }
 
@@ -49,7 +65,7 @@ namespace View.AutoTask
             foreach (Assembly assembly in assemblies)
             {
                 Type[] taskGroups = assembly.GetTypes();
-                if (Default.Options.TaskScope == TaskScope.Class)
+                if (Default.Options.TaskScope == TaskScope.Assembly || Default.Options.TaskScope == TaskScope.Class)
                 {
                     taskGroups = taskGroups.Where(x => x.CustomAttributes.Select(x => x.AttributeType).Contains(typeof(TaskClassAttribute))).ToArray();
                 }
@@ -118,13 +134,13 @@ namespace View.AutoTask
                     await Task.Delay(1000 * (int)Math.Pow(2, i + 1));
                 }
                 catch (Exception ex)
-                when (ex is TargetException
-                         or ArgumentException
-                         or TargetInvocationException
-                         or TargetParameterCountException
-                         or MethodAccessException
-                         or InvalidOperationException
-                         or NotSupportedException)
+                when (ex is TargetException ||
+                      ex is ArgumentException ||
+                      ex is TargetInvocationException ||
+                      ex is TargetParameterCountException ||
+                      ex is MethodAccessException ||
+                      ex is InvalidOperationException ||
+                      ex is NotSupportedException)
                 { return; }
             }
             return;

@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Authors>View</Authors>
-    <Description>一个自动任务库，只需要使用简单的特性和配置，即可让你的程序支持自动任务。</Description>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net45;net462;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+		<Authors>View</Authors>
+		<LangVersion>10</LangVersion>
+		<Description>一个自动任务库，只需要使用简单的特性和配置，即可让你的程序支持自动任务。</Description>
+	</PropertyGroup>
 
 </Project>

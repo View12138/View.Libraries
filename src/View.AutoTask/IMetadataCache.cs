@@ -18,14 +18,11 @@ namespace View.AutoTask
         /// 从缓存中读取任务元数据
         /// </summary>
         /// <returns>任务元数据</returns>
-        public byte[] Read();
+        byte[] Read();
 
         /// <summary>
         /// 清空当前任务元数据
         /// </summary>
-        public void Clear();
-
-        public static IMetadataCache DefaultMemonyCache => new MemonyMetadataCache();
-        public static IMetadataCache DefaultFileCache => new FileMetadataCache();
+        void Clear();
     }
 }
