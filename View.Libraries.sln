@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions", "src\View.Drawing.Extensions\View.Drawing.Extensions.csproj", "{24A965F1-AE66-4A49-A070-7CBC8C2DA7C6}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Drawing.Extensions.Test", "tests\View.Drawing.Extensions.Test\View.Drawing.Extensions.Test.csproj", "{7C58B6B6-94F7-46EC-A822-9C7A26EC02A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.Shell.Extensions", "src\View.Shell.Extensions\View.Shell.Extensions.csproj", "{51B28C4C-7730-43AB-BF5A-A77DD06EB970}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View.AutoTask", "src\View.AutoTask\View.AutoTask.csproj", "{974923FC-7B52-4682-87F2-3C81AD8AE161}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.AutoTask.Test", "tests\View.AutoTask.Test\View.AutoTask.Test.csproj", "{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,14 @@ Global
 		{51B28C4C-7730-43AB-BF5A-A77DD06EB970}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B28C4C-7730-43AB-BF5A-A77DD06EB970}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B28C4C-7730-43AB-BF5A-A77DD06EB970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974923FC-7B52-4682-87F2-3C81AD8AE161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974923FC-7B52-4682-87F2-3C81AD8AE161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974923FC-7B52-4682-87F2-3C81AD8AE161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974923FC-7B52-4682-87F2-3C81AD8AE161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +79,8 @@ Global
 		{07D1FD5A-E622-4A3C-8A09-3F0F1194F5BD} = {3BD0C617-BD2C-4690-B869-CE839B6E4062}
 		{7C58B6B6-94F7-46EC-A822-9C7A26EC02A5} = {387CBF4B-5E1B-4EED-A230-7ECA5340A47F}
 		{51B28C4C-7730-43AB-BF5A-A77DD06EB970} = {3BD0C617-BD2C-4690-B869-CE839B6E4062}
+		{974923FC-7B52-4682-87F2-3C81AD8AE161} = {3BD0C617-BD2C-4690-B869-CE839B6E4062}
+		{B62361A9-24F4-4B8F-B4B5-E0F3B9F8B4E4} = {387CBF4B-5E1B-4EED-A230-7ECA5340A47F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A138938B-FB92-4C32-B65C-C40247481042}
